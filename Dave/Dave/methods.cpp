@@ -13,6 +13,7 @@ void Dave::InitDave(Dave &man)
 	man.lives = 3;
 	man.score = 0;
 	man.boundx = 6;
+	man.speed = 7;
 
 
 
@@ -28,15 +29,6 @@ void Dave::DrawDave(Dave &man)
 
 }
 
-
-void Dave::MoveDave(int up, int down, int left, int right, Dave &man)
-{
-
-	man.x -= left;
-	man.x += right;
-	man.y -= up;
-	man.y += down;
-}
 
 void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Display Top and Bottom Text
 {
@@ -64,4 +56,31 @@ void Level::walls(const int &WIDTH, const int &HEIGHT)
 	//al_draw_filled_rectangle(10, HEIGHT - 110, 1000, 100, al_map_rgb(255, 0, 0));
 	al_flip_display();
 	al_rest(5.0);
+}
+
+void Dave:: MoveLeft(Dave &man)
+{
+	man.x -= man.speed;
+	if (man.x < 0)
+		man.x = 0;
+
+}
+void Dave:: MoveUp(Dave &man)
+{
+	man.y -= man.speed;
+	if (man.y < 0)
+		man.y = 100;
+}
+void Dave:: MoveDown(Dave &man)
+{
+	man.y += man.speed;
+	if (man.y > 700)
+		man.y = 700;
+
+}
+void Dave:: MoveRight(Dave &man)
+{
+	man.x += man.speed;
+	if (man.x > 1200)
+		man.x = 1200;
 }

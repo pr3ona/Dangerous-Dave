@@ -139,12 +139,15 @@ int main(void)
 		else if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
 
-			if (keys[UP] == true) man.MoveDave(10, 0, 0, 0, man); //UP
-			if (keys[DOWN] == true) man.MoveDave(0, 10, 0, 0, man); //DOWN
-			if (keys[LEFT] == true) man.MoveDave(0, 0, 10, 0, man); //LEFT
-			if (keys[RIGHT] == true) man.MoveDave(0, 0, 0, 10, man); //RIGHT
-
 			redraw = true;
+			if (keys[UP])
+				man.MoveUp(man);
+			if (keys[DOWN])
+				man.MoveDown(man);
+			if (keys[LEFT])
+				man.MoveLeft(man);
+			if (keys[RIGHT])
+				man.MoveRight(man);
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
