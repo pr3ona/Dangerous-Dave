@@ -5,7 +5,7 @@
 #include <allegro5\allegro_ttf.h>
 
 
-///////**** Problem with drawing bullets
+
 
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
@@ -22,7 +22,7 @@ int main(void)
 	bool done = false;
 	bool keys[5] = { false, false, false, false, false };
 	Bullet bullets[num_bullets];
-	Enemies enemy[num_enemies];
+	//Enemies enemy[num_enemies];
 	bool redraw = true;
 
 
@@ -31,7 +31,7 @@ int main(void)
 	Dave man;
 	Level lvl; // text on top and bottom of screen 
 	Bullet bull;
-	Enemies enem;
+	//Enemies enem;
 
 
 
@@ -63,7 +63,7 @@ int main(void)
 	srand(time(NULL));
 	man.InitDave(man);
 	bull.InitBullet(bullets, num_bullets);
-	enem.InitEnemy(enemy, num_enemies);
+	//enem.InitEnemy(enemy, num_enemies);
 
 
 	//Register/ Load sources to event queue 
@@ -161,8 +161,7 @@ int main(void)
 				man.MoveRight(man);
 
 			bull.UpdateBullet(bullets, num_bullets, WIDTH);
-			enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
-			enem.UpdateEnemy(enemy, num_enemies);
+			
 
 		}
 
@@ -172,7 +171,7 @@ int main(void)
 			redraw = false;
 			man.DrawDave(man);
 			bull.DrawBullet(bullets, num_bullets);
-			enem.DrawEnemy(enemy, num_enemies);
+			
 
 
 			al_flip_display();

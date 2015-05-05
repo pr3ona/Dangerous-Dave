@@ -58,23 +58,3 @@ public:
 
 };
 
-class Enemies
-{
-
-private:
-	int ID;
-	int x;
-	int y;
-	bool live;
-	int speed;
-	int boundx;
-	int boundy;
-
-public:
-	void InitEnemy(Enemies enemy[], int);
-	void DrawEnemy(Enemies enemy[], int);
-	void StartEnemy(Enemies enemy[], int, int, int);
-	void UpdateEnemy(Enemies enemy[], int);
-
-
-};
