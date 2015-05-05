@@ -4,6 +4,9 @@
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 
+ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
+ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
+
 void Dave::InitDave(Dave &man, int x, int y, int Movespeed)
 {
 	man.x = x;
@@ -32,16 +35,33 @@ void Dave::DrawDave(Dave &man, int x, int y)
 
 }
 
+void Dave::displayScoreLives(Dave &man)
+{
+
+	al_draw_textf(font24, al_map_rgb(0, 255, 0), 10, 5, 0, "Score: %i", man.score);
+	al_draw_textf(font24, al_map_rgb(0, 255, 0), 810, 5, 0, "Daves: %i", man.lives);
+}
+
+void Dave::gameOver(Dave &man, bool &isGameover)
+{
+
+	if (man.lives <= 0)
+		isGameover = true;
+}
+
+void Dave::gameOver(int WIDTH, int HEIGHT, Dave &man)
+{
+
+	//ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
+	al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH/2, HEIGHT/2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.score);
+}
 
 void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Display Top and Bottom Text
 {
 
-	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
-	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
-
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 10, 5, 0, "Score:");
+	
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 410, 5, 0, "Level ");
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 810, 5, 0, "Daves:");
+	
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 10, HEIGHT - 50, 0, "JetPack");
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 810, HEIGHT - 50, 0, "Gun");
 	al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT - 50, ALLEGRO_ALIGN_CENTER, "!!Go Thru The Door!!");
@@ -60,6 +80,8 @@ void Level::walls(const int &WIDTH, const int &HEIGHT)
 	//al_flip_display();
 	//al_rest(10.0);
 }
+
+
 
 /*										
 void Dave:: MoveLeft(Dave &man)

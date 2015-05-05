@@ -34,6 +34,9 @@ public:
 	void MoveDown(Dave &man);
 	void MoveRight(Dave &man);
 	void JumpUp(Dave &man, bool&, const int, const int);
+	void gameOver(int, int, Dave &man);
+	void gameOver(Dave &man, bool&);
+	void displayScoreLives(Dave &man);
 };
 
 class Level
@@ -42,6 +45,7 @@ class Level
 public:
 	void displayFont(const int&, const int&, int&); //display font at the top and bottom of the screen
 	void walls(const int&, const int&); //display the walls of the screen
+	
 	
 };
 

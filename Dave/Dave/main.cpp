@@ -25,6 +25,7 @@ int main(void)
 	//Enemies enemy[num_enemies];
 	bool redraw = true;
 	bool jump = false;
+	bool isGameOver = false;
 
 	int Davex = 50; //allows us to change the players position from this class youll see why...
 	int Davey = 600; //allows us to change the players position from this class youll see why...
@@ -190,8 +191,13 @@ int main(void)
 				velx = Movespeed;
 			}
 				
+			if (!isGameOver)
+			{
+				bull.UpdateBullet(bullets, num_bullets, WIDTH);
 
-			bull.UpdateBullet(bullets, num_bullets, WIDTH);
+				man.gameOver(man, isGameOver);
+			}
+			
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -211,16 +217,31 @@ int main(void)
 
 			if (jump)
 				Davey = 560 - 32;
+		if (!isGameOver)
+		{
+            
 			man.DrawDave(man, Davex, Davey);
 			bull.DrawBullet(bullets, num_bullets);
 
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			lvl.walls(WIDTH, HEIGHT);
+			lvl.displayFont(WIDTH, HEIGHT, countFPS);
+
+		//	man.displayScoreLives(man);
+		}
+
+		else
+		{
+			//man.gameOver(WIDTH, HEIGHT, man);
+		}
+
+			
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
 }
+
 
 	//Destroying
 	al_destroy_timer(timer);
