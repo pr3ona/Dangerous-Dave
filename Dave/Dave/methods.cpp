@@ -13,7 +13,7 @@ void Dave::InitDave(Dave &man)
 	man.lives = 3;
 	man.score = 0;
 	man.boundx = 6;
-	man.speed = 7;
+	man.speed = 1;
 
 	
 
@@ -39,23 +39,23 @@ void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Di
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 10, 5, 0, "Score:");
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 410, 5, 0, "Level ");
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 810, 5, 0, "Daves:");
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 10, HEIGHT - 100, 0, "JetPack");
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 810, HEIGHT - 100, 0, "Gun");
+	al_draw_text(font24, al_map_rgb(0, 255, 0), 10, HEIGHT - 50, 0, "JetPack");
+	al_draw_text(font24, al_map_rgb(0, 255, 0), 810, HEIGHT - 50, 0, "Gun");
 	al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT - 50, ALLEGRO_ALIGN_CENTER, "!!Go Thru The Door!!");
 	//al_draw_textf(font18, al_map_rgb(0, 255, 0), WIDTH, 5, ALLEGRO_ALIGN_RIGHT, "FPS: %i"); count fps needs to be added
 
-	al_flip_display();
+	//al_flip_display();
 }
 
 void Level::walls(const int &WIDTH, const int &HEIGHT)
 {
 
-	al_draw_filled_rectangle(10, 30, 1000, 75, al_map_rgb(255, 0, 0));	//Top wall (x, y, length, height, colour)
-	//al_draw_filled_rectangle(10, 50, 1000, 100, al_map_rgb(255, 0, 0));
-	//al_draw_filled_rectangle(10, HEIGHT - 120, 1000, 500, al_map_rgb(255, 0, 255)); //Bottom Wall
+	al_draw_filled_rectangle(0, HEIGHT-50, 1200, HEIGHT-80, al_map_rgb(255, 0, 0));	//Top wall (x, y, length, height, colour)
+	al_draw_filled_rectangle(100, HEIGHT-100, 200, HEIGHT-130, al_map_rgb(255, 0, 0));
+	al_draw_filled_rectangle(250, HEIGHT - 150, 350, HEIGHT - 180, al_map_rgb(255, 0, 255)); //Bottom Wall
 	//al_draw_filled_rectangle(10, HEIGHT - 110, 1000, 100, al_map_rgb(255, 0, 0));
-	al_flip_display();
-	al_rest(5.0);
+	//al_flip_display();
+	//al_rest(10.0);
 }
 
 void Dave:: MoveLeft(Dave &man)

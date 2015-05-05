@@ -73,8 +73,7 @@ int main(void)
 
 
 
-	lvl.displayFont(WIDTH, HEIGHT, countFPS);
-	lvl.walls(WIDTH, HEIGHT);
+	
 
 
 
@@ -86,7 +85,7 @@ int main(void)
 		al_wait_for_event(event_queue, &ev);
 
 		countFPS++;
-
+		
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
 		{
 
@@ -169,10 +168,12 @@ int main(void)
 		{
 
 			redraw = false;
+			
 			man.DrawDave(man);
 			bull.DrawBullet(bullets, num_bullets);
-			
 
+			lvl.displayFont(WIDTH, HEIGHT, countFPS);
+			lvl.walls(WIDTH, HEIGHT);
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
