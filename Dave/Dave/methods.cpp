@@ -4,28 +4,31 @@
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 
-void Dave::InitDave(Dave &man)
+void Dave::InitDave(Dave &man, int x, int y, int Movespeed)
 {
-	man.x = 50;
-	man.y = 600;
+	man.x = x;
+	man.y = y;
 	man.ID = PLAYER;
 	man.boundy = 7;
 	man.lives = 3;
 	man.score = 0;
 	man.boundx = 6;
-	man.speed = 10;
-
+	man.speed = Movespeed;
 	
 
 }
 
-void Dave::DrawDave(Dave &man)
+void Dave::DrawDave(Dave &man, int x, int y)
 {
 
-	al_draw_filled_rectangle(man.x, man.y - 90, man.x + 20, man.y - 70, al_map_rgb(0, 0, 255));
+	/*al_draw_filled_rectangle(man.x, man.y - 90, man.x + 20, man.y - 70, al_map_rgb(0, 0, 255));
 	al_draw_filled_rectangle(man.x - 10, man.y - 70, man.x + 30, man.y - 50, al_map_rgb(0, 0, 255));
 	al_draw_filled_rectangle(man.x, man.y - 50, man.x + 5, man.y - 20, al_map_rgb(0, 0, 255));
-	al_draw_filled_rectangle(man.x + 20, man.y - 50, man.x + 15, man.y - 20, al_map_rgb(0, 0, 255));
+	al_draw_filled_rectangle(man.x + 20, man.y - 50, man.x + 15, man.y - 20, al_map_rgb(0, 0, 255));*/
+	al_draw_filled_rectangle(x, y - 90, x + 20, y - 70, al_map_rgb(0, 0, 255));
+	al_draw_filled_rectangle(x - 10, y - 70, x + 30, y - 50, al_map_rgb(0, 0, 255));
+	al_draw_filled_rectangle(x, y - 50, x + 5, y - 20, al_map_rgb(0, 0, 255));
+	al_draw_filled_rectangle(x + 20, y - 50, x + 15, y - 20, al_map_rgb(0, 0, 255));
 
 }
 
@@ -58,6 +61,7 @@ void Level::walls(const int &WIDTH, const int &HEIGHT)
 	//al_rest(10.0);
 }
 
+/*										
 void Dave:: MoveLeft(Dave &man)
 {
 	man.x -= man.speed;
@@ -65,9 +69,15 @@ void Dave:: MoveLeft(Dave &man)
 		man.x = 0;
 
 }
-void Dave:: MoveUp(Dave &man)
+
+void Dave:: MoveUp(Dave &man, bool &jump, const int gravity, const int HEIGHT)
 {
-	man.y -= man.speed;
+	//man.vely = -man.jumpspeed;
+	//jump = false;
+	
+	man.y -= man.jumpspeed;
+	jump = true;
+
 	if (man.y < 0)
 		man.y = 50;
 }
@@ -85,6 +95,26 @@ void Dave:: MoveRight(Dave &man)
 		man.x = 1200;
 }
 
+void Dave::JumpUp(Dave &man, bool &jump, const int gravity, const int HEIGHT)
+{
+
+	if (jump)
+	{
+		man.y += gravity;
+	}
+	else
+	{
+		vely = 0;
+	}
+
+	man.y += man.vely;
+
+	jump = man.y + 75 >= 560;
+
+	if (jump)
+		man.y = HEIGHT - 75;
+}
+*/
 void Bullet::InitBullet(Bullet bullet[], int size)
 {
 

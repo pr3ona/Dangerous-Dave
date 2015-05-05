@@ -6,7 +6,6 @@
 
 
 
-
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
 const int HEIGHT = 650;
@@ -25,9 +24,14 @@ int main(void)
 	Bullet bullets[num_bullets];
 	//Enemies enemy[num_enemies];
 	bool redraw = true;
+	bool jump = false;
 
-
-
+	int Davex = 50; //allows us to change the players position from this class youll see why...
+	int Davey = 600; //allows us to change the players position from this class youll see why...
+	int Movespeed = 5; //allows us to change the players speed from this class youll see why...
+	int velx = 0; //youll see why...
+	int vely = 0; //youll see why...
+	int jumpSpeed = 15; 
 	//object variables
 	Dave man;
 	Level lvl; // text on top and bottom of screen 
@@ -62,7 +66,7 @@ int main(void)
 	event_queue = al_create_event_queue();
 
 	srand(time(NULL));
-	man.InitDave(man);
+	man.InitDave(man, Davex, Davey, Movespeed);
 	bull.InitBullet(bullets, num_bullets);
 	//enem.InitEnemy(enemy, num_enemies);
 
@@ -99,9 +103,9 @@ int main(void)
 			case ALLEGRO_KEY_UP:
 				keys[UP] = true;
 				break;
-			case ALLEGRO_KEY_DOWN:
+			/*case ALLEGRO_KEY_DOWN:		//not needed anymore delete if necessary...
 				keys[DOWN] = true;
-				break;
+				break;*/
 			case ALLEGRO_KEY_RIGHT:
 				keys[RIGHT] = true;
 				break;
@@ -124,18 +128,27 @@ int main(void)
 			case ALLEGRO_KEY_UP:
 				keys[UP] = false;
 				break;
-			case ALLEGRO_KEY_DOWN:
+
+			/*case ALLEGRO_KEY_DOWN:
 				keys[DOWN] = false;
-				break;
+				break;*/
+
 			case ALLEGRO_KEY_RIGHT:
+				velx = 0;  //Stops moving Dave right when the key is not pressed, 
+						  //if we do not have this code, Dave will continue to move right.
 				keys[RIGHT] = false;
 				break;
+
 			case ALLEGRO_KEY_LEFT:
+				velx = 0; //Stops moving Dave left when the key is not pressed,
+						  //if we do not have this code Dave will continue to move left.
 				keys[LEFT] = false;
 				break;
+
 			case ALLEGRO_KEY_ESCAPE:
 				done = true;
 				break;
+
 			case ALLEGRO_KEY_LCTRL:
 				keys[LCTRL] = false;
 				break;
@@ -151,18 +164,34 @@ int main(void)
 		{
 
 			redraw = true;
-			if (keys[UP])
-				man.MoveUp(man);
-			if (keys[DOWN])
-				man.MoveDown(man);
+			
+			if (keys[UP] && jump) //Jump
+			{
+			
+				//man.MoveUp(man, jump, gravity, HEIGHT);
+				vely = -jumpSpeed;
+				jump = false;
+			}
+
+			/*if (keys[DOWN])			//Not needed anymore, delete if necessary
+				man.MoveDown(man);*/
+			
 			if (keys[LEFT])
-				man.MoveLeft(man);
+			{
+				
+				//man.MoveLeft(man);
+				velx = -Movespeed;
+			}
+			
 			if (keys[RIGHT])
-				man.MoveRight(man);
+			{
+			
+				//man.MoveRight(man);
+				velx = Movespeed;
+			}
+				
 
 			bull.UpdateBullet(bullets, num_bullets, WIDTH);
-			
-
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -170,7 +199,19 @@ int main(void)
 
 			redraw = false;
 			
-			man.DrawDave(man);
+			if (!jump)
+				vely += gravity;
+		
+			else
+				vely = 0;
+			Davex += velx;
+			Davey += vely;
+
+			jump = (Davey + 32 >= 560);
+
+			if (jump)
+				Davey = 560 - 32;
+			man.DrawDave(man, Davex, Davey);
 			bull.DrawBullet(bullets, num_bullets);
 
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
@@ -179,12 +220,10 @@ int main(void)
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
-
-	}
-
-
+}
 
 	//Destroying
+	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
 

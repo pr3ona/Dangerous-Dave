@@ -20,15 +20,20 @@ private:
 	int boundy;
 	int score;
 	int speed;
+	int jumpspeed;
+	int velx;
+	int vely;
+	
 
 public:
 	//prototypes
-	void InitDave(Dave &man);
-	void DrawDave(Dave &man);
+	void InitDave(Dave &man, int, int, int);
+	void DrawDave(Dave &man, int, int);
 	void MoveLeft(Dave &man);
-	void MoveUp(Dave &man);
+	void MoveUp(Dave &man, bool&, const int, const int);
 	void MoveDown(Dave &man);
 	void MoveRight(Dave &man);
+	void JumpUp(Dave &man, bool&, const int, const int);
 };
 
 class Level
@@ -42,6 +47,7 @@ public:
 
 class Bullet
 {
+
 private:
 	int ID;
 	int x;
@@ -50,7 +56,6 @@ private:
 	int speed;
 
 public:
-
 	void InitBullet(Bullet bullet[], int);
 	void DrawBullet(Bullet bullet[], int);
 	void FireBullet(Bullet bullet[], int, Dave &man);
