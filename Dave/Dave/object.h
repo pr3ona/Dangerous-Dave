@@ -58,7 +58,7 @@ private:
 public:
 	void InitBullet(Bullet bullet[], int);
 	void DrawBullet(Bullet bullet[], int);
-	void FireBullet(Bullet bullet[], int, Dave &man);
+	void FireBullet(Bullet bullet[], int, int, int);
 	void UpdateBullet(Bullet bullet[], int, int);
 
 };

@@ -114,7 +114,7 @@ int main(void)
 				break;
 			case ALLEGRO_KEY_LCTRL:
 				keys[LCTRL] = true;
-				bull.FireBullet(bullets, num_bullets, man);
+				bull.FireBullet(bullets, num_bullets, Davex, Davey);
 				break;
 			}
 		}
