@@ -4,6 +4,9 @@
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 
+
+///////**** Problem with drawing bullets
+
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
 const int HEIGHT = 700;

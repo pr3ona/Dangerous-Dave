@@ -194,6 +194,6 @@ void Enemies::StartEnemy(Enemies enemy[], int size, int WIDTH, int HEIGHT)
 void Enemies::UpdateEnemy(Enemies enemy[], int size)
 {
 
-
+	//Code for where movement of enemies are added 
 
 }
