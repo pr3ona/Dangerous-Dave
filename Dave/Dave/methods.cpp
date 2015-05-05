@@ -15,7 +15,7 @@ void Dave::InitDave(Dave &man)
 	man.boundx = 6;
 	man.speed = 7;
 
-
+	
 
 }
 
@@ -83,4 +83,57 @@ void Dave:: MoveRight(Dave &man)
 	man.x += man.speed;
 	if (man.x > 1200)
 		man.x = 1200;
+}
+
+void Bullet::InitBullet(Bullet bullet[], int size)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+	
+		bullet[i].ID = BULLET;
+		bullet[i].speed = 5;
+		bullet[i].live = false;
+	}
+
+}
+void Bullet::DrawBullet(Bullet bullet[], int size)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+		if (bullet[i].live)
+			al_draw_filled_rectangle(bullet[i].x, bullet[i].y, 7, 7 ,al_map_rgb(255, 255, 255));
+	}
+}
+void Bullet::FireBullet(Bullet bullet[], int size, Dave &man)
+{
+	
+	for (int i = 0; i < size; i++)
+	{
+	
+		if (!bullet[i].live)
+		{
+			bullet[i].x = man.x + 17;
+			bullet[i].y = man.y;
+			bullet[i].live = true;
+			break;
+		}
+	}
+
+}
+void Bullet::UpdateBullet(Bullet bullet[], int size, int WIDTH)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+	
+		if (bullet[i].live)
+		{
+		
+			bullet[i].x += bullet[i].speed;
+			if (bullet[i].x > WIDTH)
+				bullet[i].live = false;
+		}
+	}
 }

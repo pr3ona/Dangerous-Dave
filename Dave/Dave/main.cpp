@@ -8,6 +8,7 @@
 const int WIDTH = 1200;
 const int HEIGHT = 700;
 const int FPS = 60;
+const int num_bullets = 3;
 
 int main(void)
 {
@@ -15,7 +16,8 @@ int main(void)
 	//primitive variable
 	int countFPS = 0;
 	bool done = false;
-	bool keys[4] = { false, false, false, false };
+	bool keys[5] = { false, false, false, false, false };
+	Bullet bullets[3];
 	bool redraw = true;
 
 
@@ -23,6 +25,7 @@ int main(void)
 	//object variables
 	Dave man;
 	Level lvl; // text on top and bottom of screen 
+	Bullet bull;
 
 
 
@@ -51,6 +54,9 @@ int main(void)
 	timer = al_create_timer(1.0 / FPS);
 	event_queue = al_create_event_queue();
 
+	man.InitDave(man);
+	bull.InitBullet(bullets, num_bullets);
+
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -58,23 +64,9 @@ int main(void)
 
 
 
-	//Pointers
-
-
-
-
-	al_clear_to_color(al_map_rgb(0, 0, 0)); //Clear screen to a black
-
-
-
-
 	lvl.displayFont(WIDTH, HEIGHT, countFPS);
 	lvl.walls(WIDTH, HEIGHT);
 
-
-
-
-	man.InitDave(man);
 
 
 	al_start_timer(timer);
@@ -92,6 +84,9 @@ int main(void)
 			switch (ev.keyboard.keycode)
 			{
 
+			case ALLEGRO_KEY_ESCAPE:
+				done = true;
+				break;
 			case ALLEGRO_KEY_UP:
 				keys[UP] = true;
 				break;
@@ -103,6 +98,10 @@ int main(void)
 				break;
 			case ALLEGRO_KEY_LEFT:
 				keys[LEFT] = true;
+				break;
+			case ALLEGRO_KEY_LCTRL:
+				keys[LCTRL] = true;
+				bull.FireBullet(bullets, num_bullets, man);
 				break;
 			}
 		}
@@ -128,6 +127,9 @@ int main(void)
 			case ALLEGRO_KEY_ESCAPE:
 				done = true;
 				break;
+			case ALLEGRO_KEY_LCTRL:
+				keys[LCTRL] = false;
+				break;
 			}
 		}
 
@@ -148,6 +150,8 @@ int main(void)
 				man.MoveLeft(man);
 			if (keys[RIGHT])
 				man.MoveRight(man);
+
+			bull.UpdateBullet(bullets, num_bullets, WIDTH);
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -155,6 +159,8 @@ int main(void)
 
 			redraw = false;
 			man.DrawDave(man);
+			bull.DrawBullet(bullets, num_bullets);
+				
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
