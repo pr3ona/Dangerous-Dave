@@ -9,10 +9,11 @@
 
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
-const int HEIGHT = 700;
+const int HEIGHT = 650;
 const int FPS = 60;
 const int num_bullets = 3;
 const int num_enemies = 3;
+const int gravity = 1;
 
 int main(void)
 {
@@ -84,7 +85,7 @@ int main(void)
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
-		countFPS++;
+		//countFPS++;
 		
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
 		{
@@ -172,7 +173,7 @@ int main(void)
 			man.DrawDave(man);
 			bull.DrawBullet(bullets, num_bullets);
 
-			lvl.displayFont(WIDTH, HEIGHT, countFPS);
+			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			lvl.walls(WIDTH, HEIGHT);
 
 			al_flip_display();

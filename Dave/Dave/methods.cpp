@@ -13,7 +13,7 @@ void Dave::InitDave(Dave &man)
 	man.lives = 3;
 	man.score = 0;
 	man.boundx = 6;
-	man.speed = 1;
+	man.speed = 10;
 
 	
 
