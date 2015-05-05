@@ -69,7 +69,7 @@ void Dave:: MoveUp(Dave &man)
 {
 	man.y -= man.speed;
 	if (man.y < 0)
-		man.y = 100;
+		man.y = 50;
 }
 void Dave:: MoveDown(Dave &man)
 {
