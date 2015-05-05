@@ -9,6 +9,7 @@ const int WIDTH = 1200;
 const int HEIGHT = 700;
 const int FPS = 60;
 const int num_bullets = 3;
+const int num_enemies = 3;
 
 int main(void)
 {
@@ -17,7 +18,8 @@ int main(void)
 	int countFPS = 0;
 	bool done = false;
 	bool keys[5] = { false, false, false, false, false };
-	Bullet bullets[3];
+	Bullet bullets[num_bullets];
+	Enemies enemy[num_enemies];
 	bool redraw = true;
 
 
@@ -26,6 +28,7 @@ int main(void)
 	Dave man;
 	Level lvl; // text on top and bottom of screen 
 	Bullet bull;
+	Enemies enem;
 
 
 
@@ -54,8 +57,11 @@ int main(void)
 	timer = al_create_timer(1.0 / FPS);
 	event_queue = al_create_event_queue();
 
+	srand(time(NULL));
 	man.InitDave(man);
 	bull.InitBullet(bullets, num_bullets);
+	enem.InitEnemy(enemy, num_enemies);
+
 
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -152,6 +158,9 @@ int main(void)
 				man.MoveRight(man);
 
 			bull.UpdateBullet(bullets, num_bullets, WIDTH);
+			enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
+			enem.UpdateEnemy(enemy, num_enemies);
+
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -160,7 +169,9 @@ int main(void)
 			redraw = false;
 			man.DrawDave(man);
 			bull.DrawBullet(bullets, num_bullets);
-				
+			enem.DrawEnemy(enemy, num_enemies);
+
+
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}

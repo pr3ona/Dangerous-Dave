@@ -92,7 +92,7 @@ void Bullet::InitBullet(Bullet bullet[], int size)
 	{
 	
 		bullet[i].ID = BULLET;
-		bullet[i].speed = 5;
+		bullet[i].speed = 8;
 		bullet[i].live = false;
 	}
 
@@ -103,7 +103,7 @@ void Bullet::DrawBullet(Bullet bullet[], int size)
 	for (int i = 0; i < size; i++)
 	{
 		if (bullet[i].live)
-			al_draw_filled_rectangle(bullet[i].x, bullet[i].y, 7, 7 ,al_map_rgb(255, 255, 255));
+			al_draw_filled_rectangle(bullet[i].x, bullet[i].y, 10, 10 ,al_map_rgb(255, 255, 255));
 	}
 }
 void Bullet::FireBullet(Bullet bullet[], int size, Dave &man)
@@ -136,4 +136,64 @@ void Bullet::UpdateBullet(Bullet bullet[], int size, int WIDTH)
 				bullet[i].live = false;
 		}
 	}
+}
+
+
+void Enemies::InitEnemy(Enemies enemy[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+
+		enemy[i].ID = ENEMY;
+		enemy[i].live = false;
+		enemy[i].speed = 5;
+		enemy[i].boundx = 18;
+		enemy[i].boundy = 18;
+	}
+
+
+}
+
+void Enemies::DrawEnemy(Enemies enemy[], int size)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+		
+		if (enemy[i].live)
+		{
+			al_draw_filled_circle(enemy[i].x, enemy[i].y, 20, al_map_rgb(255, 0, 0));
+		}
+	}
+
+
+}
+
+void Enemies::StartEnemy(Enemies enemy[], int size, int WIDTH, int HEIGHT)
+{
+	
+	for (int i = 0; i < size; i++)
+	{
+	
+		if (!enemy[i].live)
+		{
+		
+			if (rand() % 500 == 0)
+			{
+
+				enemy[i].live = true;
+				enemy[i].x = 1000;
+				enemy[i].y = 30 + rand() % (HEIGHT - 60);
+				break;
+			}
+		}
+	}
+
+}
+
+void Enemies::UpdateEnemy(Enemies enemy[], int size)
+{
+
+
+
 }
