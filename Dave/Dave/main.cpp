@@ -13,6 +13,7 @@ const int FPS = 60;
 const int num_bullets = 3;
 const int num_enemies = 3;
 const int gravity = 1;
+const int num_walls = 10;
 
 int main(void)
 {
@@ -23,6 +24,7 @@ int main(void)
 	bool keys[5] = { false, false, false, false, false };
 	Bullet bullets[num_bullets];
 	Enemies enemy[num_enemies];
+	Level walls[num_walls];
 	bool redraw = true;
 	bool jump = false;
 	bool isGameOver = false;
@@ -70,6 +72,7 @@ int main(void)
 	man.InitDave(man, Davex, Davey, Movespeed);
 	bull.InitBullet(bullets, num_bullets);
 	enem.InitEnemy(enemy, num_enemies);
+	lvl.InitWall(walls, num_walls);
 
 
 	//Register/ Load sources to event queue 
@@ -201,6 +204,8 @@ int main(void)
 			enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
 			enem.UpdateEnemy(enemy, num_enemies);
 			bull.collideBullets(bullets, num_bullets, enemy, num_enemies);
+			lvl.StartWall(walls, num_bullets, WIDTH, HEIGHT);
+			lvl.UpdateWall(walls, num_walls);
 		
 		}
 
@@ -227,6 +232,7 @@ int main(void)
 			man.DrawDave(man, Davex, Davey);
 			bull.DrawBullet(bullets, num_bullets);
 			enem.DrawEnemy(enemy, num_enemies);
+			lvl.DrawWall(walls, num_walls);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			lvl.walls(WIDTH, HEIGHT);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);

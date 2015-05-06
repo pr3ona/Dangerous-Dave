@@ -53,6 +53,99 @@ void Dave::gameOver(int WIDTH, int HEIGHT, Dave &man)
 	al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH/2, HEIGHT/2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.score);
 }
 
+/*void Dave::collideWall(Bullet bullets[], int BSize, Enemies enemy[], int ESize)
+{
+	for (int i = 0; i < BSize; i++)
+	{
+		if (bullets[i].live)
+		{
+			for (int j = 0; j < ESize; j++)
+			{
+				if (enemy[j].live)
+				{
+					if (bullets[i].x >(enemy[j].x - enemy[j].boundx) &&
+						bullets[i].x < (enemy[j].x + enemy[j].boundx) &&
+						bullets[i].y >(enemy[j].y - enemy[j].boundy) &&
+						bullets[i].y < (enemy[j].y + enemy[j].boundy))
+					{
+						bullets[i].live = false;
+						enemy[j].live = false;
+					}
+				}
+			}
+		}
+	}
+
+}
+*/
+
+
+void Level::InitWall(Level wall[], int num_walls)
+{
+	for (int i = 0; i < num_walls; i++)
+	{
+		wall[i].ID = WALL;
+		wall[i].live = false;
+		wall[i].speed = 5;
+		wall[i].boundx = 18;
+		wall[i].boundy = 18;
+	}
+}
+
+void Level::DrawWall(Level wall[], int num_walls)
+{
+
+	for (int i = 0; i < num_walls; i++)
+	{
+
+		if (wall[i].live)
+		{
+			al_draw_filled_circle(wall[i].x, wall[i].y, 20, al_map_rgb(255, 0, 0));
+		}
+	}
+}
+
+void Level::StartWall(Level wall[], int num_walls, int WIDTH, int HEIGHT)
+{
+
+	for (int i = 0; i < num_walls; i++)
+	{
+
+		if (!wall[i].live)
+		{
+
+			if (rand() % 500 == 0)
+			{
+
+				wall[i].live = true;
+				wall[i].x = WIDTH;
+				wall[i].y = 30 + rand() % (HEIGHT - 60);
+				break;
+			}
+		}
+	}
+}
+
+void Level::UpdateWall(Level wall[], int num_walls)
+{
+
+	for (int i = 0; i < num_walls; i++)
+	{
+
+		if (wall[i].live)
+		{
+			wall[i].x -= wall[i].speed; //moves walls towards the left of the screen
+		}
+	}
+}
+
+
+
+
+
+
+
+
 void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Display Top and Bottom Text
 {
 	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);

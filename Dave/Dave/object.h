@@ -1,5 +1,5 @@
 //Object IDs
-enum IDS{ PLAYER, BULLET, ENEMY };
+enum IDS{ PLAYER, BULLET, ENEMY, WALL };
 
 //Key ID
 enum KEYS{ UP, DOWN, LEFT, RIGHT, LCTRL };
@@ -45,18 +45,23 @@ public:
 class Level
 {
 
-
-
 private:
 	int ID;
 	int x;
 	int y;
 	int boundx;
 	int boundy;
+	bool live;
+	int speed;
 
 public:
 	void displayFont(const int&, const int&, int&); //display font at the top and bottom of the screen
 	void walls(const int&, const int&); //display the walls of the screen
+	void InitWall(Level wall[], int);
+	void DrawWall(Level wall[], int);
+	void StartWall(Level wall[], int, int, int);
+	void UpdateWall(Level wall[], int);
+	void CollideWall(Level wall[], int ESize, Dave &man);
 	
 	
 };
