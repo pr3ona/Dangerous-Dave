@@ -37,7 +37,7 @@ int main(void)
 	Dave man;
 	Level lvl; // text on top and bottom of screen 
 	Bullet bull;
-	//Enemies enem;
+	Enemies enem;
 
 
 
@@ -69,7 +69,7 @@ int main(void)
 	srand(time(NULL));
 	man.InitDave(man, Davex, Davey, Movespeed);
 	bull.InitBullet(bullets, num_bullets);
-	//enem.InitEnemy(enemy, num_enemies);
+	enem.InitEnemy(enemy, num_enemies);
 
 
 	//Register/ Load sources to event queue 
@@ -197,7 +197,11 @@ int main(void)
 
 			//	man.gameOver(man, isGameOver);
 			}
-			
+
+			enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
+			enem.UpdateEnemy(enemy, num_enemies);
+			bull.collideBullets(bullets, num_bullets, enemy, num_enemies);
+		
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -222,7 +226,7 @@ int main(void)
             
 			man.DrawDave(man, Davex, Davey);
 			bull.DrawBullet(bullets, num_bullets);
-
+			enem.DrawEnemy(enemy, num_enemies);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			lvl.walls(WIDTH, HEIGHT);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);

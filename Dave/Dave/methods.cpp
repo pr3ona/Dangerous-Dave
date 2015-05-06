@@ -188,6 +188,31 @@ void Bullet::UpdateBullet(Bullet bullet[], int size, int WIDTH)
 	}
 }
 
+void Bullet::collideBullets(Bullet bullets[], int BSize, Enemies enemy[], int ESize)
+{
+	for (int i = 0; i < BSize; i++)
+	{
+		if (bullets[i].live)
+		{
+			for (int j = 0; j < ESize; j++)
+			{
+				if (enemy[j].live)
+				{
+					if (bullets[i].x >(enemy[j].x - enemy[j].boundx) &&
+						bullets[i].x < (enemy[j].x + enemy[j].boundx) &&
+						bullets[i].y >(enemy[j].y - enemy[j].boundy) &&
+						bullets[i].y < (enemy[j].y + enemy[j].boundy))
+					{
+						bullets[i].live = false;
+						enemy[j].live = false;
+					}
+				}
+			}
+		}
+	}
+
+}
+
 
 void Enemies::InitEnemy(Enemies enemy[], int size)
 {

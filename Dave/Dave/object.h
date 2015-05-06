@@ -10,6 +10,8 @@ class Dave
 
 	friend class Bullet; //Bullet class receives the x and y position of the player to make it appear to the user
 						//that the bullet is firing from the user
+	friend class Level;
+
 
 private:
 	int ID;
@@ -37,10 +39,14 @@ public:
 	void gameOver(int, int, Dave &man);
 	void gameOver(Dave &man, bool&);
 	void displayScoreLives(Dave &man);
+	void collideWall();
 };
 
 class Level
 {
+
+
+
 private:
 	int ID;
 	int x;
@@ -57,6 +63,7 @@ public:
 
 class Bullet
 {
+	friend class Enemies;
 
 private:
 	int ID;
@@ -70,13 +77,14 @@ public:
 	void DrawBullet(Bullet bullet[], int);
 	void FireBullet(Bullet bullet[], int, int, int);
 	void UpdateBullet(Bullet bullet[], int, int);
-	void collideBullet(Bullet bullet[], int );
+	void collideBullets(Bullet bullet[], int, Enemies enemy[], int);
 
 };
 
 
 class Enemies
 {
+	friend class Bullet;
 
 private:
 	int ID;
@@ -92,6 +100,6 @@ public:
 	void DrawEnemy(Enemies enemy[], int);
 	void StartEnemy(Enemies enemy[], int, int, int);
 	void UpdateEnemy(Enemies enemy[], int);
-
+	
 
 };
