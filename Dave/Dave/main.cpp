@@ -22,7 +22,7 @@ int main(void)
 	bool done = false;
 	bool keys[5] = { false, false, false, false, false };
 	Bullet bullets[num_bullets];
-	//Enemies enemy[num_enemies];
+	Enemies enemy[num_enemies];
 	bool redraw = true;
 	bool jump = false;
 	bool isGameOver = false;
@@ -195,7 +195,7 @@ int main(void)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
 
-				man.gameOver(man, isGameOver);
+			//	man.gameOver(man, isGameOver);
 			}
 			
 		}
@@ -225,7 +225,7 @@ int main(void)
 
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			lvl.walls(WIDTH, HEIGHT);
-			lvl.displayFont(WIDTH, HEIGHT, countFPS);
+			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 
 		//	man.displayScoreLives(man);
 		}

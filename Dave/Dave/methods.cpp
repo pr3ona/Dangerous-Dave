@@ -4,9 +4,6 @@
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 
-ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
-ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
-
 void Dave::InitDave(Dave &man, int x, int y, int Movespeed)
 {
 	man.x = x;
@@ -37,7 +34,7 @@ void Dave::DrawDave(Dave &man, int x, int y)
 
 void Dave::displayScoreLives(Dave &man)
 {
-
+	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
 	al_draw_textf(font24, al_map_rgb(0, 255, 0), 10, 5, 0, "Score: %i", man.score);
 	al_draw_textf(font24, al_map_rgb(0, 255, 0), 810, 5, 0, "Daves: %i", man.lives);
 }
@@ -52,13 +49,14 @@ void Dave::gameOver(Dave &man, bool &isGameover)
 void Dave::gameOver(int WIDTH, int HEIGHT, Dave &man)
 {
 
-	//ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
+	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
 	al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH/2, HEIGHT/2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.score);
 }
 
 void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Display Top and Bottom Text
 {
-
+	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
+	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
 	
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 410, 5, 0, "Level ");
 	
@@ -191,3 +189,61 @@ void Bullet::UpdateBullet(Bullet bullet[], int size, int WIDTH)
 }
 
 
+void Enemies::InitEnemy(Enemies enemy[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+
+		enemy[i].ID = ENEMY;
+		enemy[i].live = false;
+		enemy[i].speed = 5;
+		enemy[i].boundx = 18;
+		enemy[i].boundy = 18;
+	}
+
+
+}
+
+void Enemies::DrawEnemy(Enemies enemy[], int size)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+
+		if (enemy[i].live)
+		{
+			al_draw_filled_circle(enemy[i].x, enemy[i].y, 20, al_map_rgb(255, 0, 0));
+		}
+	}
+
+
+}
+
+void Enemies::StartEnemy(Enemies enemy[], int size, int WIDTH, int HEIGHT)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+
+		if (!enemy[i].live)
+		{
+
+			if (rand() % 500 == 0)
+			{
+
+				enemy[i].live = true;
+				enemy[i].x = 1000;
+				enemy[i].y = 30 + rand() % (HEIGHT - 60);
+				break;
+			}
+		}
+	}
+
+}
+
+void Enemies::UpdateEnemy(Enemies enemy[], int size)
+{
+
+	//Code for where movement of enemies are added 
+
+}

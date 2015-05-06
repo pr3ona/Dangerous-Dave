@@ -41,6 +41,12 @@ public:
 
 class Level
 {
+private:
+	int ID;
+	int x;
+	int y;
+	int boundx;
+	int boundy;
 
 public:
 	void displayFont(const int&, const int&, int&); //display font at the top and bottom of the screen
@@ -64,6 +70,28 @@ public:
 	void DrawBullet(Bullet bullet[], int);
 	void FireBullet(Bullet bullet[], int, int, int);
 	void UpdateBullet(Bullet bullet[], int, int);
+	void collideBullet(Bullet bullet[], int );
 
 };
 
+
+class Enemies
+{
+
+private:
+	int ID;
+	int x;
+	int y;
+	bool live;
+	int speed;
+	int boundx;
+	int boundy;
+
+public:
+	void InitEnemy(Enemies enemy[], int);
+	void DrawEnemy(Enemies enemy[], int);
+	void StartEnemy(Enemies enemy[], int, int, int);
+	void UpdateEnemy(Enemies enemy[], int);
+
+
+};
