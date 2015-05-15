@@ -103,3 +103,15 @@ public:
 	
 
 };
+
+class Gem
+{
+private:
+
+
+public:
+
+
+
+
+};

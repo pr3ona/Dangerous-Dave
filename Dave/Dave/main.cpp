@@ -90,7 +90,8 @@ int main(void)
 
 	DaveWidth = al_get_bitmap_width(Dave);
 	DaveHeight = al_get_bitmap_height(Dave);
-
+	int redGemWidth = al_get_bitmap_width(redGem);
+	int redGemHeight = al_get_bitmap_width(redGem);
 
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / FPS);
@@ -114,7 +115,7 @@ int main(void)
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
-		//countFPS++;
+		countFPS++;
 		
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
 		{
