@@ -56,9 +56,9 @@ int main(void)
 	ALLEGRO_BITMAP *Dave = NULL;
 	ALLEGRO_BITMAP *Door = NULL;
 	ALLEGRO_BITMAP *Trophy = NULL;
-
-
-
+	ALLEGRO_BITMAP *redGem = NULL;
+	ALLEGRO_BITMAP *blueGem = NULL;
+	ALLEGRO_BITMAP *fire = NULL;
 
 	//Initialization Functions
 	if (!al_init())										//initialize Allegro
@@ -84,6 +84,9 @@ int main(void)
 	Dave = al_load_bitmap("man.png");
 	Trophy = al_load_bitmap("trophy.png");
 	Door = al_load_bitmap("door.png");
+	redGem = al_load_bitmap("redGem.png");
+	blueGem = al_load_bitmap("blueGem.png");
+	//fire = al_load_bitmap(fire.png");
 
 	DaveWidth = al_get_bitmap_width(Dave);
 	DaveHeight = al_get_bitmap_height(Dave);
@@ -252,6 +255,7 @@ int main(void)
 			bull.DrawBullet(bullets, num_bullets);
 			al_draw_bitmap(Door, 1150, HEIGHT-150, 0);
 			al_draw_bitmap(Trophy, 700, 150, 0);
+			al_draw_bitmap(redGem, 600, 500, 0);
 			//enem.DrawEnemy(enemy, num_enemies);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			//lvl.walls(WIDTH, HEIGHT);
@@ -275,6 +279,9 @@ int main(void)
 
 	//Destroying
 	al_destroy_bitmap(Dave);
+	al_destroy_bitmap(blueGem);
+	al_destroy_bitmap(redGem);
+	al_destroy_bitmap(fire);
 	al_destroy_bitmap(Door);
 	al_destroy_bitmap(Trophy);
 	al_destroy_timer(timer);
