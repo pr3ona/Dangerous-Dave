@@ -68,18 +68,6 @@ void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Di
 	//al_flip_display();
 }
 
-void Level::walls(const int &WIDTH, const int &HEIGHT)
-{
-
-	al_draw_filled_rectangle(0, HEIGHT-50, 1200, HEIGHT-80, al_map_rgb(255, 0, 0));	//Top wall (x, y, length, height, colour)
-	al_draw_filled_rectangle(100, HEIGHT-100, 200, HEIGHT-130, al_map_rgb(255, 0, 0));
-	al_draw_filled_rectangle(250, HEIGHT - 150, 350, HEIGHT - 180, al_map_rgb(255, 0, 255)); //Bottom Wall
-	//al_draw_filled_rectangle(10, HEIGHT - 110, 1000, 100, al_map_rgb(255, 0, 0));
-	//al_flip_display();
-	//al_rest(10.0);
-}
-
-
 
 /*										
 void Dave:: MoveLeft(Dave &man)

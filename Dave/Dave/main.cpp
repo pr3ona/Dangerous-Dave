@@ -3,7 +3,8 @@
 #include "object.h"
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
-
+#include <allegro5/allegro_image.h>
+#include "mappy_A5.h"
 
 
 //GLOBAL VARIABLES
@@ -26,6 +27,13 @@ int main(void)
 	bool redraw = true;
 	bool jump = false;
 	bool isGameOver = false;
+	
+	
+	//mappy-------
+	bool render = false;
+	int xOff = 0;
+	int yOff = 0;
+	 //-----------
 
 	int Davex = 50; //allows us to change the players position from this class youll see why...
 	int Davey = 600; //allows us to change the players position from this class youll see why...
@@ -62,25 +70,28 @@ int main(void)
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_install_keyboard();
+	al_init_image_addon(); //mappt
 
-	timer = al_create_timer(1.0 / FPS);
+	//mappy
+	if (MapLoad("game.fmp", 1))
+		return -5;
+	//-------------
+
+
+	
 	event_queue = al_create_event_queue();
-
+	timer = al_create_timer(1.0 / FPS);
+	
 	srand(time(NULL));
 	man.InitDave(man, Davex, Davey, Movespeed);
 	bull.InitBullet(bullets, num_bullets);
-	enem.InitEnemy(enemy, num_enemies);
+	//enem.InitEnemy(enemy, num_enemies);
 
 
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
-
-
-
-	
-
 
 
 	al_start_timer(timer);
@@ -164,6 +175,10 @@ int main(void)
 		else if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
 
+			//mappy------------------------------------------
+		
+			//-------------------------------------------------
+
 			redraw = true;
 			
 			if (keys[UP] && jump) //Jump
@@ -198,8 +213,8 @@ int main(void)
 			//	man.gameOver(man, isGameOver);
 			}
 
-			enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
-			enem.UpdateEnemy(enemy, num_enemies);
+			//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
+		//	enem.UpdateEnemy(enemy, num_enemies);
 			bull.collideBullets(bullets, num_bullets, enemy, num_enemies);
 		
 		}
@@ -209,6 +224,9 @@ int main(void)
 
 			redraw = false;
 			
+			MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
+
+
 			if (!jump)
 				vely += gravity;
 		
@@ -226,9 +244,9 @@ int main(void)
             
 			man.DrawDave(man, Davex, Davey);
 			bull.DrawBullet(bullets, num_bullets);
-			enem.DrawEnemy(enemy, num_enemies);
+			//enem.DrawEnemy(enemy, num_enemies);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
-			lvl.walls(WIDTH, HEIGHT);
+			//lvl.walls(WIDTH, HEIGHT);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 
 		//	man.displayScoreLives(man);

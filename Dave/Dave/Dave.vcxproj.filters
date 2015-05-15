@@ -21,9 +21,15 @@
     <ClCompile Include="methods.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mappy_A5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mappy_A5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
