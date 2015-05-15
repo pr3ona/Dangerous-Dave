@@ -27,18 +27,16 @@ int main(void)
 	bool redraw = true;
 	bool jump = false;
 	bool isGameOver = false;
-	
-	int imageWidth = 0;
-	int imageHeight = 0;
+	int DaveWidth = 0;
+	int DaveHeight = 0;
 	
 	//mappy-------
-	bool render = false;
 	int xOff = 0;
 	int yOff = 0;
 	 //-----------
 
-	int Davex = 50; //allows us to change the players position from this class youll see why...
-	int Davey = 600; //allows us to change the players position from this class youll see why...
+	int Davex = 200; //allows us to change the players position from this class youll see why...
+	int Davey = 400; //allows us to change the players position from this class youll see why...
 	int Movespeed = 5; //allows us to change the players speed from this class youll see why...
 	int velx = 0; //youll see why...
 	int vely = 0; //youll see why...
@@ -55,7 +53,10 @@ int main(void)
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
-	ALLEGRO_BITMAP *image = NULL;
+	ALLEGRO_BITMAP *Dave = NULL;
+	ALLEGRO_BITMAP *Door = NULL;
+	ALLEGRO_BITMAP *Trophy = NULL;
+
 
 
 
@@ -80,10 +81,10 @@ int main(void)
 		return -5;
 	//-------------
 
-	image = al_load_bitmap("man.png");
+	Dave = al_load_bitmap("man.png");
 
-	imageWidth = al_get_bitmap_width(image);
-	imageHeight = al_get_bitmap_height(image);
+	DaveWidth = al_get_bitmap_width(Dave);
+	DaveHeight = al_get_bitmap_height(Dave);
 
 
 	event_queue = al_create_event_queue();
@@ -181,11 +182,6 @@ int main(void)
 
 		else if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
-
-			//mappy------------------------------------------
-		
-			//-------------------------------------------------
-
 			redraw = true;
 			
 			if (keys[UP] && jump) //Jump
@@ -222,6 +218,7 @@ int main(void)
 
 			//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
 		//	enem.UpdateEnemy(enemy, num_enemies);
+		
 			bull.collideBullets(bullets, num_bullets, enemy, num_enemies);
 		
 		}
@@ -249,7 +246,7 @@ int main(void)
 		if (!isGameOver)
 		{
             
-			
+			al_draw_bitmap(Dave, Davex,Davey, 0);
 			bull.DrawBullet(bullets, num_bullets);
 			//enem.DrawEnemy(enemy, num_enemies);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
@@ -265,7 +262,7 @@ int main(void)
 		}
 
 			
-		al_draw_bitmap(image, 100 - ( imageWidth / 2), (HEIGHT-150)-imageHeight, 0);
+		
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
@@ -273,7 +270,7 @@ int main(void)
 
 
 	//Destroying
-	al_destroy_bitmap(image);		
+	al_destroy_bitmap(Dave);		
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
