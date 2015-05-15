@@ -82,6 +82,8 @@ int main(void)
 	//-------------
 
 	Dave = al_load_bitmap("man.png");
+	Trophy = al_load_bitmap("trophy.png");
+	Door = al_load_bitmap("door.png");
 
 	DaveWidth = al_get_bitmap_width(Dave);
 	DaveHeight = al_get_bitmap_height(Dave);
@@ -246,8 +248,10 @@ int main(void)
 		if (!isGameOver)
 		{
             
-			al_draw_bitmap(Dave, Davex,Davey, 0);
+			al_draw_bitmap(Dave, Davex,Davey-DaveHeight/2, 0);
 			bull.DrawBullet(bullets, num_bullets);
+			al_draw_bitmap(Door, 1150, HEIGHT-150, 0);
+			al_draw_bitmap(Trophy, 700, 150, 0);
 			//enem.DrawEnemy(enemy, num_enemies);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			//lvl.walls(WIDTH, HEIGHT);
@@ -270,7 +274,9 @@ int main(void)
 
 
 	//Destroying
-	al_destroy_bitmap(Dave);		
+	al_destroy_bitmap(Dave);
+	al_destroy_bitmap(Door);
+	al_destroy_bitmap(Trophy);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
