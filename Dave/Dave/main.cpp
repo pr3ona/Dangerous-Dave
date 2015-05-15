@@ -28,6 +28,8 @@ int main(void)
 	bool jump = false;
 	bool isGameOver = false;
 	
+	int imageWidth = 0;
+	int imageHeight = 0;
 	
 	//mappy-------
 	bool render = false;
@@ -53,6 +55,7 @@ int main(void)
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
+	ALLEGRO_BITMAP *image = NULL;
 
 
 
@@ -77,8 +80,12 @@ int main(void)
 		return -5;
 	//-------------
 
+	image = al_load_bitmap("man.png");
 
-	
+	imageWidth = al_get_bitmap_width(image);
+	imageHeight = al_get_bitmap_height(image);
+
+
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / FPS);
 	
@@ -242,7 +249,7 @@ int main(void)
 		if (!isGameOver)
 		{
             
-			man.DrawDave(man, Davex, Davey);
+			
 			bull.DrawBullet(bullets, num_bullets);
 			//enem.DrawEnemy(enemy, num_enemies);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
@@ -258,7 +265,7 @@ int main(void)
 		}
 
 			
-
+		al_draw_bitmap(image, 100 - ( imageWidth / 2), (HEIGHT-150)-imageHeight, 0);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
@@ -266,6 +273,7 @@ int main(void)
 
 
 	//Destroying
+	al_destroy_bitmap(image);		
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object

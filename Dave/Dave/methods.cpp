@@ -18,18 +18,14 @@ void Dave::InitDave(Dave &man, int x, int y, int Movespeed)
 
 }
 
-void Dave::DrawDave(Dave &man, int x, int y)
+void Dave::DrawDave(Dave &man, int x, int y, int imageRad)
 {
 
-	/*al_draw_filled_rectangle(man.x, man.y - 90, man.x + 20, man.y - 70, al_map_rgb(0, 0, 255));
-	al_draw_filled_rectangle(man.x - 10, man.y - 70, man.x + 30, man.y - 50, al_map_rgb(0, 0, 255));
-	al_draw_filled_rectangle(man.x, man.y - 50, man.x + 5, man.y - 20, al_map_rgb(0, 0, 255));
-	al_draw_filled_rectangle(man.x + 20, man.y - 50, man.x + 15, man.y - 20, al_map_rgb(0, 0, 255));*/
-	al_draw_filled_rectangle(x, y - 90, x + 20, y - 70, al_map_rgb(0, 0, 255));
-	al_draw_filled_rectangle(x - 10, y - 70, x + 30, y - 50, al_map_rgb(0, 0, 255));
-	al_draw_filled_rectangle(x, y - 50, x + 5, y - 20, al_map_rgb(0, 0, 255));
-	al_draw_filled_rectangle(x + 20, y - 50, x + 15, y - 20, al_map_rgb(0, 0, 255));
+	al_draw_filled_rectangle(imageRad, imageRad - 9, imageRad + 10, imageRad - 7, al_map_rgb(255, 0, 0));
+	al_draw_filled_rectangle(imageRad, imageRad + 9, imageRad + 10, imageRad + 7, al_map_rgb(255, 0, 0));
 
+	al_draw_filled_triangle(imageRad - 12, imageRad - 17, imageRad + 12, imageRad, imageRad - 12, imageRad + 17, al_map_rgb(0, 255, 0));
+	al_draw_filled_rectangle(imageRad - 12, imageRad - 2, imageRad + 15, imageRad + 2, al_map_rgb(0, 0, 255));
 }
 
 void Dave::displayScoreLives(Dave &man)
