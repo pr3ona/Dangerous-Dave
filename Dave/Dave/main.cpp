@@ -237,7 +237,7 @@ int main(void)
 			//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
 			//	enem.UpdateEnemy(enemy, num_enemies);
 
-			bull.collideBullets(bullets, num_bullets, enemy, num_enemies);
+			bull.collideBullets(bullets, num_bullets, enemy, num_enemies,man);
 
 			if (Davex + Dbx > RGx - RGBx &&
 				Davex - Dbx < RGx + RGBx &&
@@ -277,20 +277,31 @@ int main(void)
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
 			if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
-
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
 
 			if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 200)
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-			if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200)
+
+
+			if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 355)
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 450);
+
+
+
+			if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 300)
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 400);
+
+
+
+			if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200 && Davey> HEIGHT - 400)
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-			if (Davex > 855 && Davex< 1200 && Davey < HEIGHT - 150)
+			if (Davex > 855 && Davex< 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 250)
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 205);
 
-			if (Davex > 551 && Davex< 860 && Davey < HEIGHT - 355)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 455);
+
+
 
 
 
