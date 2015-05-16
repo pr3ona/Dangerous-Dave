@@ -15,6 +15,7 @@ const int num_bullets = 3;
 const int num_enemies = 3;
 const int gravity = 1;
 int Lives = 3;
+int Score = 0;
 
 int main(void)
 {
@@ -33,7 +34,16 @@ int main(void)
 	bool isGameOver = false;
 	bool collision = false;
 	bool collisiont = false;
-	bool liveGem = true;
+	bool liveGem1 = true;
+	bool liveGem2 = true;
+	bool liveGem3 = true;
+	bool liveGem4 = true;
+	bool liveGem5 = true;
+	bool liveGem6 = true;
+	bool liveGem7 = true;
+	bool liveGem8 = true;
+
+
 	bool liveTrophy = true;
 	Bullet bullets[num_bullets];
 	Enemies enemy[num_enemies];
@@ -65,8 +75,16 @@ int main(void)
 	ALLEGRO_BITMAP *Dave = NULL;
 	ALLEGRO_BITMAP *Door = NULL;
 	ALLEGRO_BITMAP *Trophy = NULL;
-	ALLEGRO_BITMAP *redGem = NULL;
-	ALLEGRO_BITMAP *blueGem = NULL;
+	ALLEGRO_BITMAP *redGem1 = NULL;
+	ALLEGRO_BITMAP *redGem2 = NULL;
+	ALLEGRO_BITMAP *redGem3 = NULL;
+	ALLEGRO_BITMAP *redGem4 = NULL;
+
+	ALLEGRO_BITMAP *blueGem1 = NULL;
+	ALLEGRO_BITMAP *blueGem2= NULL;
+	ALLEGRO_BITMAP *blueGem3 = NULL;
+	ALLEGRO_BITMAP *blueGem4 = NULL;
+
 	ALLEGRO_BITMAP *fire = NULL;
 	ALLEGRO_BITMAP *en = NULL;
 
@@ -96,8 +114,19 @@ int main(void)
 	en = al_load_bitmap("enemy.png");
 	Trophy = al_load_bitmap("trophy.png");
 	Door = al_load_bitmap("door.png");
-	redGem = al_load_bitmap("redGem.png");
-	blueGem = al_load_bitmap("blueGem.png");
+	//red gems
+	redGem1 = al_load_bitmap("redGem.png");
+	redGem2 = al_load_bitmap("redGem.png");
+	redGem3 = al_load_bitmap("redGem.png");
+	redGem4 = al_load_bitmap("redGem.png");
+
+	//blue gems
+	blueGem1 = al_load_bitmap("blueGem.png");
+	blueGem2 = al_load_bitmap("blueGem.png");
+	blueGem3 = al_load_bitmap("blueGem.png");
+	blueGem4 = al_load_bitmap("blueGem.png");
+	
+	
 	//fire = al_load_bitmap(fire.png");
 	////////
 
@@ -106,8 +135,54 @@ int main(void)
 	DaveHeight = al_get_bitmap_height(Dave);
 	EnemyWidth = al_get_bitmap_width(en);
 	EnemyHeight = al_get_bitmap_height(en);
-	int redGemWidth = al_get_bitmap_width(redGem);
-	int redGemHeight = al_get_bitmap_width(redGem);
+
+	int redGemWidth = al_get_bitmap_width(redGem1);
+	int redGemHeight = al_get_bitmap_width(redGem1);
+
+
+	int redGem2Width = al_get_bitmap_width(redGem2);
+	int redGem2Height = al_get_bitmap_width(redGem2);
+	int RG2x = 250;
+	int RG2y = HEIGHT-300;
+
+	int redGem3Width = al_get_bitmap_width(redGem3);
+	int redGem3Height = al_get_bitmap_width(redGem3);
+	int RG3x = 300;
+	int RG3y = HEIGHT-400;
+
+	int redGem4Width = al_get_bitmap_width(redGem4);
+	int redGem4Height = al_get_bitmap_width(redGem4);
+	int RG4x = 400;
+	int RG4y = HEIGHT - 400;
+
+
+	int blueGem1Width = al_get_bitmap_width(blueGem1);
+	int blueGem1Height = al_get_bitmap_width(blueGem1);
+	int BG1x = 600;
+	int BG1y = HEIGHT - 300;
+
+	int blueGem2Width = al_get_bitmap_width(blueGem2);
+	int blueGem2Height = al_get_bitmap_width(blueGem2);
+	int BG2x = 850;
+	int BG2y = HEIGHT - 300;
+
+	int blueGem3Width = al_get_bitmap_width(blueGem3);
+	int blueGem3Height = al_get_bitmap_width(blueGem3);
+	int BG3x = 50;
+	int BG3y = HEIGHT - 500;
+
+	int blueGem4Width = al_get_bitmap_width(blueGem4);
+	int blueGem4Height = al_get_bitmap_width(blueGem4);
+	int BG4x = 1100;
+	int BG4y = HEIGHT - 450;
+
+
+
+
+
+
+
+
 	int trophyGemWidth = al_get_bitmap_width(Trophy);
 	int trophyGemHeight = al_get_bitmap_width(Trophy);
 
@@ -293,17 +368,80 @@ int main(void)
 				//collision detection gem
 				if (Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
 				{
-					liveGem = false;
-					man.increaseScore(man);
-
+					Score += 100;
+					liveGem1 = false;
 				}
+				
+
+
+				//collision detection gem
+				if (Davex + Dbx > RG2x - redGem2Width/2 && Davex - Dbx < RG2x + redGem2Width/2 && Davey + Dby > RG2y - redGem2Height/2 &&	Davey - Dby < RG2y + redGem2Height/2)
+				{
+					Score+=100;
+					liveGem2 = false;
+				}
+
+					//collision detection gem
+				if (Davex + Dbx > RG2x - redGem2Width/2 && Davex - Dbx < RG2x + redGem2Width/2 && Davey + Dby > RG2y - redGem2Height/2 &&	Davey - Dby < RG2y + redGem2Height/2)
+				{
+					Score+=100;
+					liveGem2 = false;
+					
+				}
+
+
+				//collision detection gem
+				if (Davex + Dbx > RG3x - redGem3Width / 2 && Davex - Dbx < RG3x + redGem3Width / 2 && Davey + Dby > RG3y - redGem3Height / 2 && Davey - Dby < RG3y + redGem3Height / 2)
+				{
+					Score += 100;
+					liveGem3 = false;
+				}
+
+
+				//collision detection gem
+				if (Davex + Dbx > RG4x - redGem4Width / 2 && Davex - Dbx < RG4x + redGem4Width / 2 && Davey + Dby > RG4y - redGem4Height / 2 && Davey - Dby < RG4y + redGem4Height / 2)
+				{
+					Score += 100;
+					liveGem4 = false;
+				}
+
+
+				//collision detection gem
+				if (Davex + Dbx > BG1x - blueGem1Width / 2 && Davex - Dbx < BG1x + blueGem1Width / 2 && Davey + Dby > BG1y - blueGem1Height / 2 && Davey - Dby < BG1y + blueGem1Height / 2)
+				{
+					Score += 100;
+					liveGem5 = false;
+				}
+
+				if (Davex + Dbx > BG2x - blueGem2Width / 2 && Davex - Dbx < BG2x + blueGem1Width / 2 && Davey + Dby > BG2y - blueGem2Height / 2 && Davey - Dby < BG2y + blueGem2Height / 2)
+				{
+					Score += 100;
+					liveGem6 = false;
+				}
+
+
+				if (Davex + Dbx > BG3x - blueGem3Width / 2 && Davex - Dbx < BG3x + blueGem3Width / 2 && Davey + Dby > BG3y - blueGem3Height / 2 && Davey - Dby < BG3y + blueGem3Height / 2)
+				{
+					Score += 100;
+					liveGem7 = false;
+				}
+
+				if (Davex + Dbx > BG4x - blueGem4Width / 2 && Davex - Dbx < BG4x + blueGem4Width / 2 && Davey + Dby > BG4y - blueGem4Height / 2 && Davey - Dby < BG4y + blueGem4Height / 2)
+				{
+					Score += 100;
+					liveGem8 = false;
+				}
+
+
+
+
 
 				//collision detection trophy
 				if (Davex + Dbx > Tx - TBx && Davex - Dbx < Tx + TBx && Davey + Dby > Ty - TBy &&	Davey - Dby < Ty + TBy)
-				{
+				{ 
+					Score += 1000;
 					liveTrophy = false;
-					man.increaseScore(man);
-
+					
 				}
 				if (!liveTrophy)
 				{
@@ -331,7 +469,7 @@ int main(void)
 
 				int posx = 200;
 
-				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", man.displayScore(man));
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", Score);
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", Lives);
 
@@ -388,7 +526,7 @@ int main(void)
 				{
 					man.increaseScore(man);
 					//al_draw_bitmap(redGem, 600, 100, 0);
-					liveGem = false;
+					liveGem1 = false;
 				}
 				
 
@@ -397,17 +535,49 @@ int main(void)
 				{
 					man.increaseScore(man);
 					//al_draw_bitmap(redGem, 600, 100, 0);
-					liveGem = false;
+					liveGem1 = false;
 				}
 				////////Draw to screen
 				
-				if (liveGem)
+				if (liveGem1)
 				{
-					al_draw_bitmap(redGem, RGx, RGy, 0);
+					al_draw_bitmap(redGem1, RGx, RGy, 0);
 				}
 				
+				if (liveGem2)
+				{
+					al_draw_bitmap(redGem2, RG2x, RG2y, 0);
+				}
+
+				if (liveGem3)
+				{
+					al_draw_bitmap(redGem3, RG3x, RG3y, 0);
+				}
 				
-				
+				if (liveGem4)
+				{
+					al_draw_bitmap(redGem4, RG4x, RG4y, 0);
+				}
+				if (liveGem5)
+				{
+					al_draw_bitmap(blueGem1, BG1x, BG1y, 0);
+				}
+				if (liveGem6)
+				{
+					al_draw_bitmap(blueGem2, BG2x, BG2y, 0);
+				}
+				if (liveGem7)
+				{
+					al_draw_bitmap(blueGem3, BG3x, BG3y, 0);
+				}
+				if (liveGem8)
+				{
+					al_draw_bitmap(blueGem4, BG4x, BG4y, 0);
+				}
+
+
+
+
 				al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
 				al_draw_bitmap(en, xE, 350, NULL);
 				bull.DrawBullet(bullets, num_bullets);
@@ -444,8 +614,8 @@ int main(void)
 	////Destroy objects from memory
 	al_destroy_bitmap(Dave);
 	al_destroy_bitmap(en);
-	al_destroy_bitmap(blueGem);
-	al_destroy_bitmap(redGem);
+	al_destroy_bitmap(blueGem1);
+	al_destroy_bitmap(redGem1);
 	al_destroy_bitmap(fire);
 	al_destroy_bitmap(Door);
 	al_destroy_bitmap(Trophy);
