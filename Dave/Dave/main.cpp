@@ -41,7 +41,7 @@ int main(void)
 	int Movespeed = 5; //allows us to change the players speed from this class youll see why...
 	int velx = 0; //youll see why...
 	int vely = 0; //youll see why...
-	int jumpSpeed = 13; 
+	int jumpSpeed = 11; 
 	//object variables
 	Dave man;
 	Level lvl; // text on top and bottom of screen 
@@ -277,13 +277,22 @@ int main(void)
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
 			if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
-			{
-
 
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
-				if (Davex > 455 && Davey >HEIGHT - 355)
-					Davey = HEIGHT - 250;
-			}
+
+			if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 200 )
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
+				
+			if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200)
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
+
+			if (Davex > 855&& Davex< 1200 && Davey < HEIGHT - 150)
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 205);
+
+			if (Davex > 551 && Davex< 860 && Davey < HEIGHT - 355)
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 455);
+			
+			
 				
 			// frame restriction left
 			if (Davex<1)
