@@ -449,7 +449,7 @@ int main(void)
 				//trophy collision 
 				if (!liveTrophy)
 				{
-					int txtposx = 450;	//text position x
+					int txtposx = 480;	//text position x
 					al_draw_text(font24, al_map_rgb(0, 255, 0), txtposx, HEIGHT - 38, 0, "!!!Go Thru the door!!!");
 					al_draw_bitmap(Trophy, txtposx + 250 , HEIGHT - 42, 0);
 					al_draw_bitmap(Trophy, txtposx - 50, HEIGHT - 42, 0);
@@ -479,6 +479,8 @@ int main(void)
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", Score);
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", Lives);
+				al_draw_text(font24, al_map_rgb(0, 255, 0), 938, HEIGHT - 38, 0, "Press LCNTRL to shoot.");
+				al_draw_text(font24, al_map_rgb(0, 255, 0), 25, HEIGHT - 38, 0, "Use arrow keys to move.");
 
 				if (!jump)
 					vely += gravity;
