@@ -276,9 +276,24 @@ int main(void)
 			if (Davex>105 && Davex<305 && Davey<HEIGHT - 205)
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-			if (Davex>205 && Davex<455 && Davey<HEIGHT - 305)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
+			if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
+			{
 
+
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
+				if (Davex > 455 && Davey >HEIGHT - 355)
+					Davey = HEIGHT - 250;
+			}
+				
+			// frame restriction left
+			if (Davex<1)
+				Davex = 1;
+
+			// frame restriction right
+			if (Davex>1200 - 26)
+				Davex = 1200 - 26;
+
+			redraw = true;
 
 		if (!isGameOver)
 		{
