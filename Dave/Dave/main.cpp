@@ -42,7 +42,8 @@ int main(void)
 	bool liveGem6 = true;
 	bool liveGem7 = true;
 	bool liveGem8 = true;
-
+	bool level1 = true;
+	bool level2 = false;
 
 	bool liveTrophy = true;
 	Bullet bullets[num_bullets];
@@ -448,7 +449,7 @@ int main(void)
 				//trophy collision 
 				if (!liveTrophy)
 				{
-					al_draw_text(font24, al_map_rgb(0, 255, 0), 600, HEIGHT - 60, 0, "Go Thru the door");
+					al_draw_text(font24, al_map_rgb(0, 255, 0), 600, HEIGHT - 50, 0, "Go Thru the door");
 				}
 
 				if (Lives <= 0)
@@ -578,6 +579,15 @@ int main(void)
 					al_draw_bitmap(blueGem4, BG4x, BG4y, 0);
 				}
 
+				if (!liveTrophy && Davex > 1090 && Davey<HEIGHT - 100 && Davey>HEIGHT - 200)
+				{
+					//al_play_sample(win, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+					al_draw_text(font24, al_map_rgb(255, 168, 255), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Congratulations you passed Level 1");
+					al_flip_display();
+					al_rest(3);
+					done = true;
+					//goto END;
+				}
 
 
 
@@ -614,18 +624,26 @@ int main(void)
 		}
 	}
 
+	
+
 	////Destroy objects from memory
 	al_destroy_bitmap(Dave);
 	al_destroy_bitmap(en);
 	al_destroy_bitmap(blueGem1);
+	al_destroy_bitmap(blueGem2);
+	al_destroy_bitmap(blueGem3);
+	al_destroy_bitmap(blueGem4);
 	al_destroy_bitmap(redGem1);
+	al_destroy_bitmap(redGem2);
+	al_destroy_bitmap(redGem3);
+	al_destroy_bitmap(redGem4);
 	al_destroy_bitmap(fire);
 	al_destroy_bitmap(Door);
 	al_destroy_bitmap(Trophy);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
+	
 
 	return 0;
-}
-///End of code
+	}
