@@ -14,7 +14,7 @@ const int FPS = 60;
 const int num_bullets = 3;
 const int num_enemies = 3;
 const int gravity = 1;
-
+int Lives = 3;
 int main(void)
 {
 
@@ -45,8 +45,7 @@ int main(void)
 	int xOff = 0;
 	int yOff = 0;
 	//-----------
-	float xE = 750, yE = 350;
-
+	
 	//Dave init specs
 	int Davex = 100; //allows us to change the players position from this class
 	int Davey = 150; //allows us to change the players position from this class
@@ -115,6 +114,8 @@ int main(void)
 	int RGBy = redGemHeight / 2;
 	int RGx = 600;
 	int RGy = 500;
+	int xE = 750;
+	int yE = 350;
 	int a = 1, b = 1;
 	//////////////
 
@@ -269,15 +270,21 @@ int main(void)
 				enem.UpdateEnemy(enemy, num_enemies);
 
 				//Collision detection
-				if (Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
+				if (Davex + Dbx > xE - Ebx && Davex - Dbx < xE + Ebx && Davey + Dby > yE - Eby &&	Davey - Dby < yE + Eby)
 				{
-					collision = true;
+					//collision = true;
+
+					Lives -= 1;
+					Davex = 100;
+					Davey = 150;
+					al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
+
 				}
-
-				else
-					collision = false;
-
-				man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
+				if (Lives <= 0)
+					isGameOver = true;
+					
+					
+					//man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 			}
 		}
 
@@ -296,7 +303,7 @@ int main(void)
 
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", man.displayScore(man));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
-				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", man.displayLives(man));
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", Lives);
 
 				if (!jump)
 					vely += gravity;
@@ -357,13 +364,13 @@ int main(void)
 				man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 
 				//If collision is detected execute this code
-				if (collision)
-				{
-					al_draw_bitmap(redGem, 600, 100, 0);
+				//if (collision)
+				//{
+					//al_draw_bitmap(redGem, 600, 100, 0);
 
-					man.DecreaseLife(man);
-				}
-
+				//	Lives -= 1;
+				//}
+			//
 				//enem.DrawEnemy(enemy, num_enemies);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 				//lvl.walls(WIDTH, HEIGHT);
