@@ -359,7 +359,7 @@ int main(void)
 				{
 					//collision = true;
 
-					Lives -= 1;
+					man.DecreaseLife(man); // Lives -= 1;
 					Davex = 100;
 					Davey = 150;
 					al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
@@ -369,7 +369,8 @@ int main(void)
 				//collision detection gem
 				if (liveGem1 && Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
 				{
-					Score += 100;
+					man.increaseScore(man);
+					//Score += 100;
 					liveGem1 = false;
 				}
 				
@@ -378,14 +379,16 @@ int main(void)
 				//collision detection gem
 				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
-					Score+=100;
+					man.increaseScore(man);
+					//Score+=100;
 					liveGem2 = false;
 				}
 
 					//collision detection gem
 				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
-					Score+=100;
+					man.increaseScore(man);
+					//Score+=100;
 					liveGem2 = false;
 					
 				}
@@ -394,7 +397,8 @@ int main(void)
 				//collision detection gem
 				if (liveGem3&&Davex + Dbx > RG3x - redGem3Width / 2 && Davex - Dbx < RG3x + redGem3Width / 2 && Davey + Dby > RG3y - redGem3Height / 2 && Davey - Dby < RG3y + redGem3Height / 2)
 				{
-					Score += 100;
+					man.increaseScore(man);
+					//Score += 100;
 					liveGem3 = false;
 				}
 
@@ -402,7 +406,8 @@ int main(void)
 				//collision detection gem
 				if (liveGem4&&Davex + Dbx > RG4x - redGem4Width / 2 && Davex - Dbx < RG4x + redGem4Width / 2 && Davey + Dby > RG4y - redGem4Height / 2 && Davey - Dby < RG4y + redGem4Height / 2)
 				{
-					Score += 100;
+					man.increaseScore(man);
+					//Score += 100;
 					liveGem4 = false;
 				}
 
@@ -410,26 +415,30 @@ int main(void)
 				//collision detection gem
 				if (liveGem5&&Davex + Dbx > BG1x - blueGem1Width / 2 && Davex - Dbx < BG1x + blueGem1Width / 2 && Davey + Dby > BG1y - blueGem1Height / 2 && Davey - Dby < BG1y + blueGem1Height / 2)
 				{
-					Score += 100;
+					man.increaseScore(man);
+					//Score += 100;
 					liveGem5 = false;
 				}
 
 				if (liveGem6&&Davex + Dbx > BG2x - blueGem2Width / 2 && Davex - Dbx < BG2x + blueGem1Width / 2 && Davey + Dby > BG2y - blueGem2Height / 2 && Davey - Dby < BG2y + blueGem2Height / 2)
 				{
-					Score += 100;
+					man.increaseScore(man);
+					//Score += 100;
 					liveGem6 = false;
 				}
 
 
 				if (liveGem7&&Davex + Dbx > BG3x - blueGem3Width / 2 && Davex - Dbx < BG3x + blueGem3Width / 2 && Davey + Dby > BG3y - blueGem3Height / 2 && Davey - Dby < BG3y + blueGem3Height / 2)
 				{
-					Score += 100;
+					man.increaseScore(man);
+					//Score += 100;
 					liveGem7 = false;
 				}
 
 				if (liveGem8&&Davex + Dbx > BG4x - blueGem4Width / 2 && Davex - Dbx < BG4x + blueGem4Width / 2 && Davey + Dby > BG4y - blueGem4Height / 2 && Davey - Dby < BG4y + blueGem4Height / 2)
 				{
-					Score += 100;
+					man.increaseScore(man);
+					//Score += 100;
 					liveGem8 = false;
 				}
 
@@ -440,7 +449,8 @@ int main(void)
 				//collision detection trophy
 				if (liveTrophy&&Davex + Dbx > Tx - TBx && Davex - Dbx < Tx + TBx && Davey + Dby > Ty - TBy &&	Davey - Dby < Ty + TBy)
 				{ 
-					Score += 1000;
+					man.increaseScore(man);
+					//Score += 1000;
 					liveTrophy = false;	
 				}
 
@@ -476,9 +486,9 @@ int main(void)
 
 				int posx = 200;
 
-				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", Score);
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", man.displayScore(man));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
-				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", Lives);
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", man.displayLives(man));
 				al_draw_text(font24, al_map_rgb(0, 255, 0), 938, HEIGHT - 38, 0, "Press LCNTRL to shoot.");
 				al_draw_text(font24, al_map_rgb(0, 255, 0), 25, HEIGHT - 38, 0, "Use arrow keys to move.");
 

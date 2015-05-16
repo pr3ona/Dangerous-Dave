@@ -71,9 +71,9 @@ int Dave::displayLives(Dave &man)
 
 int Dave::increaseScore(Dave &man)
 {
-	man.score += 100;
-	if (man.score = 1000)
-		man.lives = +1;
+	man.score += 200;
+	if (man.score % 1000 == 0)
+		man.lives++;
 		
 		return man.score;
 }
