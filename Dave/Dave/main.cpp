@@ -29,6 +29,7 @@ int main(void)
 	bool isGameOver = false;
 	int DaveWidth = 0;
 	int DaveHeight = 0;
+	bool collision = false;
 	
 	//mappy-------
 	int xOff = 0;
@@ -93,11 +94,20 @@ int main(void)
 	int redGemWidth = al_get_bitmap_width(redGem);
 	int redGemHeight = al_get_bitmap_width(redGem);
 
+	//Bounds for collision
+	int Dbx = DaveWidth / 2; //Dave bound x
+	int Dby = DaveHeight / 2; //Dave bound y
+	int RGBx = redGemWidth / 2;
+	int RGBy = redGemHeight / 2;
+	int RGx = 600;
+	int RGy = 500;
+
+	//////////////
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / FPS);
 	
 	srand(time(NULL));
-	man.InitDave(man, Davex, Davey, Movespeed);
+	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby);
 	bull.InitBullet(bullets, num_bullets);
 	//enem.InitEnemy(enemy, num_enemies);
 
@@ -189,44 +199,56 @@ int main(void)
 		else if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
 			redraw = true;
-			
+
 			if (keys[UP] && jump) //Jump
 			{
-			
+
 				//man.MoveUp(man, jump, gravity, HEIGHT);
 				vely = -jumpSpeed;
 				jump = false;
+
+
 			}
 
 			/*if (keys[DOWN])			//Not needed anymore, delete if necessary
 				man.MoveDown(man);*/
-			
+
 			if (keys[LEFT])
 			{
-				
+
 				//man.MoveLeft(man);
 				velx = -Movespeed;
 			}
-			
+
 			if (keys[RIGHT])
 			{
-			
+
 				//man.MoveRight(man);
 				velx = Movespeed;
 			}
-				
+
 			if (!isGameOver)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
 
-			//	man.gameOver(man, isGameOver);
+				//	man.gameOver(man, isGameOver);
 			}
 
 			//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
-		//	enem.UpdateEnemy(enemy, num_enemies);
-		
+			//	enem.UpdateEnemy(enemy, num_enemies);
+
 			bull.collideBullets(bullets, num_bullets, enemy, num_enemies);
-		
+
+			if (Davex + Dbx > RGx - RGBx &&
+				Davex - Dbx < RGx + RGBx &&
+				Davey + Dby > RGy - RGBy &&
+				Davey - Dby < RGy + RGBy)
+			{
+				collision = true;
+			}
+			else
+				collision = false;
+
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -260,12 +282,21 @@ int main(void)
 
 		if (!isGameOver)
 		{
-            
+
+            al_draw_bitmap(redGem, RGx, RGy, 0);
 			al_draw_bitmap(Dave, Davex,Davey-DaveHeight/2, 0);
 			bull.DrawBullet(bullets, num_bullets);
 			al_draw_bitmap(Door, 1150, HEIGHT-150, 0);
 			al_draw_bitmap(Trophy, 700, 150, 0);
-			al_draw_bitmap(redGem, 600, 500, 0);
+			
+			if (collision)
+			{
+
+				
+				al_draw_bitmap(redGem, 600, 100, 0);
+
+			}
+
 			//enem.DrawEnemy(enemy, num_enemies);
 			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 			//lvl.walls(WIDTH, HEIGHT);

@@ -4,15 +4,15 @@
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 
-void Dave::InitDave(Dave &man, int x, int y, int Movespeed)
+void Dave::InitDave(Dave &man, int x, int y, int Movespeed, int bx, int by)
 {
 	man.x = x;
 	man.y = y;
 	man.ID = PLAYER;
-	man.boundy = 7;
+	man.boundy = by;
 	man.lives = 3;
 	man.score = 0;
-	man.boundx = 6;
+	man.boundx = bx;
 	man.speed = Movespeed;
 	
 

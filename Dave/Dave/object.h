@@ -29,7 +29,7 @@ private:
 
 public:
 	//prototypes
-	void InitDave(Dave &man, int, int, int);
+	void InitDave(Dave &man, int, int, int, int, int);
 	void DrawDave(Dave &man, int, int,int);
 	void MoveLeft(Dave &man);
 	void MoveUp(Dave &man, bool&, const int, const int);
