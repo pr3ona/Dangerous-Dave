@@ -29,12 +29,15 @@ int main(void)
 	bool isGameOver = false;
 	int DaveWidth = 0;
 	int DaveHeight = 0;
+	int EnemyWidth = 0;
+	int EnemyHeight = 0;
 	bool collision = false;
 	
 	//mappy-------
 	int xOff = 0;
 	int yOff = 0;
 	 //-----------
+	float xE = 750, yE = 350;
 
 	int Davex = 100; //allows us to change the players position from this class youll see why...
 	int Davey = 150; //allows us to change the players position from this class youll see why...
@@ -48,8 +51,6 @@ int main(void)
 	Bullet bull;
 	Enemies enem;
 
-
-
 	//Allegro variables
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -60,6 +61,7 @@ int main(void)
 	ALLEGRO_BITMAP *redGem = NULL;
 	ALLEGRO_BITMAP *blueGem = NULL;
 	ALLEGRO_BITMAP *fire = NULL;
+	ALLEGRO_BITMAP *en = NULL; 
 
 	//Initialization Functions
 	if (!al_init())										//initialize Allegro
@@ -83,6 +85,7 @@ int main(void)
 	//-------------
 
 	Dave = al_load_bitmap("man.png");
+	en = al_load_bitmap("enemy.png");
 	Trophy = al_load_bitmap("trophy.png");
 	Door = al_load_bitmap("door.png");
 	redGem = al_load_bitmap("redGem.png");
@@ -91,12 +94,16 @@ int main(void)
 
 	DaveWidth = al_get_bitmap_width(Dave);
 	DaveHeight = al_get_bitmap_height(Dave);
+	EnemyWidth = al_get_bitmap_width(en);
+	EnemyHeight = al_get_bitmap_height(en);
 	int redGemWidth = al_get_bitmap_width(redGem);
 	int redGemHeight = al_get_bitmap_width(redGem);
 
 	//Bounds for collision
 	int Dbx = DaveWidth / 2; //Dave bound x
 	int Dby = DaveHeight / 2; //Dave bound y
+	int Ebx = EnemyWidth / 2;
+	int Eby = EnemyHeight / 2;
 	int RGBx = redGemWidth / 2;
 	int RGBy = redGemHeight / 2;
 	int RGx = 600;
@@ -117,6 +124,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
+	int a = 1, b = 1;
 
 	al_start_timer(timer);
 	while (!done)
@@ -126,6 +134,13 @@ int main(void)
 		al_wait_for_event(event_queue, &ev);
 
 		countFPS++;
+		//enemy one level 1
+		if (xE >= 900 && a>0)
+			a *= -1;
+		if (xE<750 && a<0)
+			a *= -1;
+
+		xE += a * 3;
 		
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
 		{
@@ -248,7 +263,14 @@ int main(void)
 			}
 			else
 				collision = false;
-
+			
+			if (Davex + Dbx > xE - Ebx &&
+				Davex - Dbx < xE + Ebx &&
+				Davey + Dby > yE - Eby &&
+				Davey - Dby < yE + Eby)
+			{
+				al_destroy_bitmap(Dave);
+			}
 		}
 
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -300,6 +322,7 @@ int main(void)
 
             al_draw_bitmap(redGem, RGx, RGy, 0);
 			al_draw_bitmap(Dave, Davex,Davey-DaveHeight/2, 0);
+			al_draw_bitmap(en, xE, 350, NULL);
 			bull.DrawBullet(bullets, num_bullets);
 			al_draw_bitmap(Door, 1150, HEIGHT-150, 0);
 			al_draw_bitmap(Trophy, 700, 150, 0);
