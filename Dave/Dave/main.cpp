@@ -5,7 +5,7 @@
 #include <allegro5\allegro_ttf.h>
 #include <allegro5/allegro_image.h>
 #include "mappy_A5.h"
-
+//hi
 
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
