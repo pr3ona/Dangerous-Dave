@@ -366,7 +366,7 @@ int main(void)
 				}
 
 				//collision detection gem
-				if (Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
+				if (liveGem1 && Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
 				{
 					Score += 100;
 					liveGem1 = false;
@@ -375,14 +375,14 @@ int main(void)
 
 
 				//collision detection gem
-				if (Davex + Dbx > RG2x - redGem2Width/2 && Davex - Dbx < RG2x + redGem2Width/2 && Davey + Dby > RG2y - redGem2Height/2 &&	Davey - Dby < RG2y + redGem2Height/2)
+				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
 					Score+=100;
 					liveGem2 = false;
 				}
 
 					//collision detection gem
-				if (Davex + Dbx > RG2x - redGem2Width/2 && Davex - Dbx < RG2x + redGem2Width/2 && Davey + Dby > RG2y - redGem2Height/2 &&	Davey - Dby < RG2y + redGem2Height/2)
+				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
 					Score+=100;
 					liveGem2 = false;
@@ -391,7 +391,7 @@ int main(void)
 
 
 				//collision detection gem
-				if (Davex + Dbx > RG3x - redGem3Width / 2 && Davex - Dbx < RG3x + redGem3Width / 2 && Davey + Dby > RG3y - redGem3Height / 2 && Davey - Dby < RG3y + redGem3Height / 2)
+				if (liveGem3&&Davex + Dbx > RG3x - redGem3Width / 2 && Davex - Dbx < RG3x + redGem3Width / 2 && Davey + Dby > RG3y - redGem3Height / 2 && Davey - Dby < RG3y + redGem3Height / 2)
 				{
 					Score += 100;
 					liveGem3 = false;
@@ -399,7 +399,7 @@ int main(void)
 
 
 				//collision detection gem
-				if (Davex + Dbx > RG4x - redGem4Width / 2 && Davex - Dbx < RG4x + redGem4Width / 2 && Davey + Dby > RG4y - redGem4Height / 2 && Davey - Dby < RG4y + redGem4Height / 2)
+				if (liveGem4&&Davex + Dbx > RG4x - redGem4Width / 2 && Davex - Dbx < RG4x + redGem4Width / 2 && Davey + Dby > RG4y - redGem4Height / 2 && Davey - Dby < RG4y + redGem4Height / 2)
 				{
 					Score += 100;
 					liveGem4 = false;
@@ -407,26 +407,26 @@ int main(void)
 
 
 				//collision detection gem
-				if (Davex + Dbx > BG1x - blueGem1Width / 2 && Davex - Dbx < BG1x + blueGem1Width / 2 && Davey + Dby > BG1y - blueGem1Height / 2 && Davey - Dby < BG1y + blueGem1Height / 2)
+				if (liveGem5&&Davex + Dbx > BG1x - blueGem1Width / 2 && Davex - Dbx < BG1x + blueGem1Width / 2 && Davey + Dby > BG1y - blueGem1Height / 2 && Davey - Dby < BG1y + blueGem1Height / 2)
 				{
 					Score += 100;
 					liveGem5 = false;
 				}
 
-				if (Davex + Dbx > BG2x - blueGem2Width / 2 && Davex - Dbx < BG2x + blueGem1Width / 2 && Davey + Dby > BG2y - blueGem2Height / 2 && Davey - Dby < BG2y + blueGem2Height / 2)
+				if (liveGem6&&Davex + Dbx > BG2x - blueGem2Width / 2 && Davex - Dbx < BG2x + blueGem1Width / 2 && Davey + Dby > BG2y - blueGem2Height / 2 && Davey - Dby < BG2y + blueGem2Height / 2)
 				{
 					Score += 100;
 					liveGem6 = false;
 				}
 
 
-				if (Davex + Dbx > BG3x - blueGem3Width / 2 && Davex - Dbx < BG3x + blueGem3Width / 2 && Davey + Dby > BG3y - blueGem3Height / 2 && Davey - Dby < BG3y + blueGem3Height / 2)
+				if (liveGem7&&Davex + Dbx > BG3x - blueGem3Width / 2 && Davex - Dbx < BG3x + blueGem3Width / 2 && Davey + Dby > BG3y - blueGem3Height / 2 && Davey - Dby < BG3y + blueGem3Height / 2)
 				{
 					Score += 100;
 					liveGem7 = false;
 				}
 
-				if (Davex + Dbx > BG4x - blueGem4Width / 2 && Davex - Dbx < BG4x + blueGem4Width / 2 && Davey + Dby > BG4y - blueGem4Height / 2 && Davey - Dby < BG4y + blueGem4Height / 2)
+				if (liveGem8&&Davex + Dbx > BG4x - blueGem4Width / 2 && Davex - Dbx < BG4x + blueGem4Width / 2 && Davey + Dby > BG4y - blueGem4Height / 2 && Davey - Dby < BG4y + blueGem4Height / 2)
 				{
 					Score += 100;
 					liveGem8 = false;
@@ -437,12 +437,15 @@ int main(void)
 
 
 				//collision detection trophy
-				if (Davex + Dbx > Tx - TBx && Davex - Dbx < Tx + TBx && Davey + Dby > Ty - TBy &&	Davey - Dby < Ty + TBy)
+				if (liveTrophy&&Davex + Dbx > Tx - TBx && Davex - Dbx < Tx + TBx && Davey + Dby > Ty - TBy &&	Davey - Dby < Ty + TBy)
 				{ 
 					Score += 1000;
-					liveTrophy = false;
-					
+					liveTrophy = false;	
 				}
+
+
+
+				//trophy collision 
 				if (!liveTrophy)
 				{
 					al_draw_text(font24, al_map_rgb(0, 255, 0), 600, HEIGHT - 60, 0, "Go Thru the door");
