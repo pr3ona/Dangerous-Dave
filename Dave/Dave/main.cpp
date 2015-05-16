@@ -22,6 +22,8 @@ int main(void)
 	int countFPS = 0;
 	int DaveWidth = 0;
 	int DaveHeight = 0;
+	int EnemyWidth = 0;
+	int EnemyHeight = 0;
 
 	bool done = false;
 	bool keys[5] = { false, false, false, false, false };
@@ -43,6 +45,7 @@ int main(void)
 	int xOff = 0;
 	int yOff = 0;
 	//-----------
+	float xE = 750, yE = 350;
 
 	//Dave init specs
 	int Davex = 100; //allows us to change the players position from this class
@@ -63,6 +66,7 @@ int main(void)
 	ALLEGRO_BITMAP *redGem = NULL;
 	ALLEGRO_BITMAP *blueGem = NULL;
 	ALLEGRO_BITMAP *fire = NULL;
+	ALLEGRO_BITMAP *en = NULL;
 
 	//Initialization Functions
 	if (!al_init())										//initialize Allegro
@@ -87,6 +91,7 @@ int main(void)
 
 	///Load pictures
 	Dave = al_load_bitmap("man.png");
+	en = al_load_bitmap("enemy.png");
 	Trophy = al_load_bitmap("trophy.png");
 	Door = al_load_bitmap("door.png");
 	redGem = al_load_bitmap("redGem.png");
@@ -97,15 +102,20 @@ int main(void)
 	//Bounds for collision
 	DaveWidth = al_get_bitmap_width(Dave);
 	DaveHeight = al_get_bitmap_height(Dave);
+	EnemyWidth = al_get_bitmap_width(en);
+	EnemyHeight = al_get_bitmap_height(en);
 	int redGemWidth = al_get_bitmap_width(redGem);
 	int redGemHeight = al_get_bitmap_width(redGem);
 
 	int Dbx = DaveWidth / 2; //Dave bound x
 	int Dby = DaveHeight / 2; //Dave bound y
+	int Ebx = EnemyWidth / 2;
+	int Eby = EnemyHeight / 2;
 	int RGBx = redGemWidth / 2;
 	int RGBy = redGemHeight / 2;
 	int RGx = 600;
 	int RGy = 500;
+	int a = 1, b = 1;
 	//////////////
 
 	event_queue = al_create_event_queue();
@@ -135,6 +145,14 @@ int main(void)
 		al_wait_for_event(event_queue, &ev);
 
 		countFPS++;
+
+		//enemy one level 1
+		if (xE >= 900 && a>0)
+			a *= -1;
+		if (xE<750 && a<0)
+			a *= -1;
+
+		xE += a * 3;
 
 		///////Key pressed
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
@@ -331,6 +349,7 @@ int main(void)
 				////////Draw to screen
 				al_draw_bitmap(redGem, RGx, RGy, 0);
 				al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
+				al_draw_bitmap(en, xE, 350, NULL);
 				bull.DrawBullet(bullets, num_bullets);
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
 				al_draw_bitmap(Trophy, 700, 150, 0);
@@ -365,6 +384,7 @@ int main(void)
 
 	////Destroy objects from memory
 	al_destroy_bitmap(Dave);
+	al_destroy_bitmap(en);
 	al_destroy_bitmap(blueGem);
 	al_destroy_bitmap(redGem);
 	al_destroy_bitmap(fire);
