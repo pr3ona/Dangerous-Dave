@@ -15,6 +15,7 @@ const int num_bullets = 3;
 const int num_enemies = 3;
 const int gravity = 1;
 int Lives = 3;
+
 int main(void)
 {
 
@@ -31,7 +32,9 @@ int main(void)
 	bool jump = false;
 	bool isGameOver = false;
 	bool collision = false;
-
+	bool collisiont = false;
+	bool liveGem = true;
+	bool liveTrophy = true;
 	Bullet bullets[num_bullets];
 	Enemies enemy[num_enemies];
 
@@ -105,6 +108,8 @@ int main(void)
 	EnemyHeight = al_get_bitmap_height(en);
 	int redGemWidth = al_get_bitmap_width(redGem);
 	int redGemHeight = al_get_bitmap_width(redGem);
+	int trophyGemWidth = al_get_bitmap_width(Trophy);
+	int trophyGemHeight = al_get_bitmap_width(Trophy);
 
 	int Dbx = DaveWidth / 2; //Dave bound x
 	int Dby = DaveHeight / 2; //Dave bound y
@@ -117,6 +122,10 @@ int main(void)
 	int xE = 750;
 	int yE = 350;
 	int a = 1, b = 1;
+	int Tx = 700;
+	int Ty = 150;
+	int TBx = trophyGemWidth / 2;
+	int TBy = trophyGemHeight / 2;
 	//////////////
 
 	event_queue = al_create_event_queue();
@@ -269,7 +278,7 @@ int main(void)
 				enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
 				enem.UpdateEnemy(enemy, num_enemies);
 
-				//Collision detection
+				//Collision  enemy
 				if (Davex + Dbx > xE - Ebx && Davex - Dbx < xE + Ebx && Davey + Dby > yE - Eby &&	Davey - Dby < yE + Eby)
 				{
 					//collision = true;
@@ -280,6 +289,27 @@ int main(void)
 					al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
 
 				}
+
+				//collision detection gem
+				if (Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
+				{
+					liveGem = false;
+					man.increaseScore(man);
+
+				}
+
+				//collision detection trophy
+				if (Davex + Dbx > Tx - TBx && Davex - Dbx < Tx + TBx && Davey + Dby > Ty - TBy &&	Davey - Dby < Ty + TBy)
+				{
+					liveTrophy = false;
+					man.increaseScore(man);
+
+				}
+				if (!liveTrophy)
+				{
+					al_draw_text(font24, al_map_rgb(0, 255, 0), 600, HEIGHT - 60, 0, "Go Thru the door");
+				}
+
 				if (Lives <= 0)
 					isGameOver = true;
 					
@@ -318,7 +348,7 @@ int main(void)
 				if (Davex>0 && Davex<205 && Davey<HEIGHT - 105)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 155);
 
-				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205)
+				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205 && Davey>275)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
 				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
@@ -353,23 +383,45 @@ int main(void)
 
 				redraw = true;
 
+				//If gem collision is detected execute this code
+				if (collision)
+				{
+					man.increaseScore(man);
+					//al_draw_bitmap(redGem, 600, 100, 0);
+					liveGem = false;
+				}
+				
+
+				//If trophy collision is detected execute this code
+				if (collisiont)
+				{
+					man.increaseScore(man);
+					//al_draw_bitmap(redGem, 600, 100, 0);
+					liveGem = false;
+				}
 				////////Draw to screen
-				al_draw_bitmap(redGem, RGx, RGy, 0);
+				
+				if (liveGem)
+				{
+					al_draw_bitmap(redGem, RGx, RGy, 0);
+				}
+				
+				
+				
 				al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
 				al_draw_bitmap(en, xE, 350, NULL);
 				bull.DrawBullet(bullets, num_bullets);
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
-				al_draw_bitmap(Trophy, 700, 150, 0);
+				
+				if (liveTrophy)
+				{
+					al_draw_bitmap(Trophy, Tx, Ty, 0);
+				}
+				
 
 				man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 
-				//If collision is detected execute this code
-				//if (collision)
-				//{
-					//al_draw_bitmap(redGem, 600, 100, 0);
-
-				//	Lives -= 1;
-				//}
+				
 			//
 				//enem.DrawEnemy(enemy, num_enemies);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);

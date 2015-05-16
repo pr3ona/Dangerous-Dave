@@ -43,6 +43,7 @@ public:
 	int DecreaseLife(Dave &man);
 	int displayScore(Dave &man);
 	int displayLives(Dave &man);
+	int increaseScore(Dave &man);
 };
 
 class Level

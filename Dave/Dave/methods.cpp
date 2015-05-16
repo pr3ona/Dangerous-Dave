@@ -69,6 +69,17 @@ int Dave::displayLives(Dave &man)
 	return man.lives;
 }
 
+int Dave::increaseScore(Dave &man)
+{
+	man.score += 100;
+	if (man.score = 1000)
+		man.lives = +1;
+		
+		return man.score;
+}
+
+
+
 void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Display Top and Bottom Text
 {
 	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
