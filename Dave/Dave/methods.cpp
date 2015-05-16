@@ -4,6 +4,9 @@
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 
+
+
+
 void Dave::InitDave(Dave &man, int x, int y, int Movespeed, int bx, int by)
 {
 	man.x = x;
@@ -14,8 +17,6 @@ void Dave::InitDave(Dave &man, int x, int y, int Movespeed, int bx, int by)
 	man.score = 0;
 	man.boundx = bx;
 	man.speed = Movespeed;
-	
-
 }
 
 void Dave::DrawDave(Dave &man, int x, int y, int imageRad)
@@ -49,19 +50,37 @@ void Dave::gameOver(int WIDTH, int HEIGHT, Dave &man)
 	al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH/2, HEIGHT/2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.score);
 }
 
+int Dave::DecreaseLife(Dave &man)
+{
+	return man.lives--;
+}
+int Dave::displayScore(Dave &man)
+{
+	return man.score;
+}
+
+int Level::displayLevel(Level &lvl)
+{
+	return lvl.stageNumber;
+}
+
+int Dave::displayLives(Dave &man)
+{
+	return man.lives;
+}
+
 void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Display Top and Bottom Text
 {
 	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
 	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
-	
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 410, 5, 0, "Level ");
-	
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 10, HEIGHT - 50, 0, "JetPack");
+
+	al_draw_text(font24, al_map_rgb(0, 255, 0), 5, 5, 0, "Level:000000000000000000 ");	
+	/*al_draw_text(font24, al_map_rgb(0, 255, 0), 10, HEIGHT - 50, 0, "JetPack");
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 810, HEIGHT - 50, 0, "Gun");
 	al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT - 50, ALLEGRO_ALIGN_CENTER, "!!Go Thru The Door!!");
-	//al_draw_textf(font18, al_map_rgb(0, 255, 0), WIDTH, 5, ALLEGRO_ALIGN_RIGHT, "FPS: %i"); count fps needs to be added
+	al_draw_textf(font18, al_map_rgb(0, 255, 0), WIDTH, 5, ALLEGRO_ALIGN_RIGHT, "FPS: %i"); count fps needs to be added
 
-	//al_flip_display();
+	//al_flip_display();??????????*/
 }
 
 
@@ -172,7 +191,7 @@ void Bullet::UpdateBullet(Bullet bullet[], int size, int WIDTH)
 	}
 }
 
-void Bullet::collideBullets(Bullet bullets[], int BSize, Enemies enemy[], int ESize)
+void Bullet::collideBullets(Bullet bullets[], int BSize, Enemies enemy[], int ESize, Dave &man)
 {
 	for (int i = 0; i < BSize; i++)
 	{
@@ -189,6 +208,7 @@ void Bullet::collideBullets(Bullet bullets[], int BSize, Enemies enemy[], int ES
 					{
 						bullets[i].live = false;
 						enemy[j].live = false;
+						man.score++;
 					}
 				}
 			}

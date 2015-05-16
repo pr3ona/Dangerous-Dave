@@ -40,24 +40,25 @@ public:
 	void gameOver(Dave &man, bool&);
 	void displayScoreLives(Dave &man);
 	void collideWall();
+	int DecreaseLife(Dave &man);
+	int displayScore(Dave &man);
+	int displayLives(Dave &man);
 };
 
 class Level
 {
-
-
-
 private:
 	int ID;
 	int x;
 	int y;
 	int boundx;
 	int boundy;
+	int stageNumber = 01;
 
 public:
 	void displayFont(const int&, const int&, int&); //display font at the top and bottom of the screen
 	void walls(const int&, const int&); //display the walls of the screen
-	
+	int displayLevel(Level &lvl);
 	
 };
 
@@ -77,7 +78,7 @@ public:
 	void DrawBullet(Bullet bullet[], int);
 	void FireBullet(Bullet bullet[], int, int, int);
 	void UpdateBullet(Bullet bullet[], int, int);
-	void collideBullets(Bullet bullet[], int, Enemies enemy[], int);
+	void collideBullets(Bullet bullet[], int, Enemies enemy[], int, Dave &man);
 
 };
 

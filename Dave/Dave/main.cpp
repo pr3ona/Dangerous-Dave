@@ -113,12 +113,14 @@ int main(void)
 	
 	srand(time(NULL));
 	
+	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
+	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
+
 	//Initialise characters
 	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby);
 	bull.InitBullet(bullets, num_bullets);
 	//enem.InitEnemy(enemy, num_enemies);
-	//
-
+	
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -244,7 +246,7 @@ int main(void)
 			if (!isGameOver)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
-				bull.collideBullets(bullets, num_bullets, enemy, num_enemies);
+				bull.collideBullets(bullets, num_bullets, enemy, num_enemies, man);
 				//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
 				//	enem.UpdateEnemy(enemy, num_enemies);
 
@@ -257,7 +259,7 @@ int main(void)
 			else
 				collision = false;
 				
-			man.gameOver(man, isGameOver);
+			man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 			}
 		}
 
@@ -270,68 +272,78 @@ int main(void)
 			if (!isGameOver)
 			{
 
-			MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
+				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
 
-			if (!jump)
-				vely += gravity;
+				int posx = 200;
+
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", man.displayScore(man));
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", man.displayLives(man));
+
+				if (!jump)
+					vely += gravity;
 		
-			else
-				vely = 0;
-				Davex += velx;
-				Davey += vely;
+				else
+					vely = 0;
+					Davex += velx;
+					Davey += vely;
 
-				jump = (Davey + DaveHeight / 2 >= HEIGHT-105);
+					jump = (Davey + DaveHeight / 2 >= HEIGHT-105);
 
-			if (Davex>0 && Davex<205 && Davey<HEIGHT-105)
-				jump = (Davey+DaveHeight/2>=HEIGHT-155);
+				if (Davex>0 && Davex<205 && Davey<HEIGHT-105)
+					jump = (Davey+DaveHeight/2>=HEIGHT-155);
 
 
-			if (Davex>105 && Davex<305 && Davey<HEIGHT - 205)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
+				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-			if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
-			{
+				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
+				{
 
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
-				if (Davex > 455 && Davey >HEIGHT - 355)
-					Davey = HEIGHT - 250;
-			}
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
+		
+					if (Davex > 455 && Davey >HEIGHT - 355)
+						Davey = HEIGHT - 250;
+				}
 				
-			// frame restriction left
-			if (Davex<1)
-				Davex = 1;
+				// frame restriction left
+				if (Davex<1)
+					Davex = 1;
 
-			// frame restriction right
-			if (Davex>1200 - 26)
-				Davex = 1200 - 26;
+				// frame restriction right
+				if (Davex>1200 - 26)
+					Davex = 1200 - 26;
 
-			redraw = true;
+				redraw = true;
 
-			////////Draw to screen
-            al_draw_bitmap(redGem, RGx, RGy, 0);
-			al_draw_bitmap(Dave, Davex,Davey-DaveHeight/2, 0);
-			bull.DrawBullet(bullets, num_bullets);
-			al_draw_bitmap(Door, 1150, HEIGHT-150, 0);
-			al_draw_bitmap(Trophy, 700, 150, 0);
+				////////Draw to screen
+				al_draw_bitmap(redGem, RGx, RGy, 0);
+				al_draw_bitmap(Dave, Davex,Davey-DaveHeight/2, 0);
+				bull.DrawBullet(bullets, num_bullets);
+				al_draw_bitmap(Door, 1150, HEIGHT-150, 0);
+				al_draw_bitmap(Trophy, 700, 150, 0);
 			
-			man.gameOver(man, isGameOver);
+				man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 			
-			//If collision is detected execute this code
-			if (collision)
-			{
-				al_draw_bitmap(redGem, 600, 100, 0);
+				//If collision is detected execute this code
+				if (collision)
+				{
+					al_draw_bitmap(redGem, 600, 100, 0);
+				
+					man.DecreaseLife(man);
+				}
+
+				//enem.DrawEnemy(enemy, num_enemies);
+				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
+				//lvl.walls(WIDTH, HEIGHT);
+				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
+				//man.displayScoreLives(man);
 			}
-
-			//enem.DrawEnemy(enemy, num_enemies);
-			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
-			//lvl.walls(WIDTH, HEIGHT);
-			//lvl.displayFont(WIDTH, HEIGHT, countFPS);
-			//man.displayScoreLives(man);
-		}
-
+		
+		////If there is a game over
 		else
 		{
-			//man.gameOver(WIDTH, HEIGHT, man);
+			man.gameOver(WIDTH, HEIGHT, man);
 		}
 
 			al_flip_display();
