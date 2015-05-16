@@ -293,26 +293,38 @@ int main(void)
 				if (Davex>0 && Davex<205 && Davey<HEIGHT - 105)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 155);
 
-
 				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
 				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
-				{
-
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
 
-					if (Davex > 455 && Davey >HEIGHT - 355)
-						Davey = HEIGHT - 250;
+				if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 200)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
+
+				if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 355)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 450);
+
+				if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 300)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 400);
+
+				if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200 && Davey> HEIGHT - 400)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
+
+				if (Davex > 855 && Davex < 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 250)
+				{
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 205);
 				}
 
+
+
 				// frame restriction left
-				if (Davex<1)
-					Davex = 1;
+				if (Davex<50)
+					Davex = 50;
 
 				// frame restriction right
-				if (Davex>1200 - 26)
-					Davex = 1200 - 26;
+				if (Davex>1100)
+					Davex = 1100;
 
 				redraw = true;
 
@@ -333,7 +345,7 @@ int main(void)
 					man.DecreaseLife(man);
 				}
 
-				enem.DrawEnemy(enemy, num_enemies);
+				//enem.DrawEnemy(enemy, num_enemies);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 				//lvl.walls(WIDTH, HEIGHT);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
