@@ -118,6 +118,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
 
+	////////////Main Game Loop
 	al_start_timer(timer);
 	while (!done)
 	{
@@ -126,7 +127,7 @@ int main(void)
 		al_wait_for_event(event_queue, &ev);
 
 		countFPS++;
-		
+		/////////////Key pressed
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
 		{
 
@@ -155,6 +156,7 @@ int main(void)
 			}
 		}
 
+		/////////////Key released
 		else if (ev.type == ALLEGRO_EVENT_KEY_UP) //checks to see if a key is released
 		{
 
@@ -191,11 +193,13 @@ int main(void)
 			}
 		}
 
+		/////////////Close screen
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
 			done = true;
 		}
 
+		/////////////Timer Event
 		else if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
 			redraw = true;
@@ -230,10 +234,6 @@ int main(void)
 			if (!isGameOver)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
-
-				//	man.gameOver(man, isGameOver);
-			}
-
 			//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
 			//	enem.UpdateEnemy(enemy, num_enemies);
 
@@ -249,8 +249,14 @@ int main(void)
 			else
 				collision = false;
 
+				man.gameOver(man, isGameOver);
+			}
+
+
+
 		}
 
+		////////////Redraw
 		if (redraw && al_is_event_queue_empty(event_queue))
 		{
 
@@ -259,6 +265,8 @@ int main(void)
 			MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
 
 
+			if (!isGameOver)
+			{
 			if (!jump)
 				vely += gravity;
 		
@@ -295,19 +303,20 @@ int main(void)
 
 			redraw = true;
 
-		if (!isGameOver)
-		{
-
+			
+			
             al_draw_bitmap(redGem, RGx, RGy, 0);
 			al_draw_bitmap(Dave, Davex,Davey-DaveHeight/2, 0);
 			bull.DrawBullet(bullets, num_bullets);
 			al_draw_bitmap(Door, 1150, HEIGHT-150, 0);
 			al_draw_bitmap(Trophy, 700, 150, 0);
 			
+			man.gameOver(man, isGameOver);
+
+
+
 			if (collision)
 			{
-
-				
 				al_draw_bitmap(redGem, 600, 100, 0);
 
 			}
