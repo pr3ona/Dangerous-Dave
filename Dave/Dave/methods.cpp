@@ -61,7 +61,7 @@ int Dave::displayScore(Dave &man)
 
 int Level::displayLevel(Level &lvl)
 {
-	return lvl.stageNumber;
+	return lvl.stageNumber +1;
 }
 
 int Dave::displayLives(Dave &man)

@@ -449,7 +449,10 @@ int main(void)
 				//trophy collision 
 				if (!liveTrophy)
 				{
-					al_draw_text(font24, al_map_rgb(0, 255, 0), 600, HEIGHT - 50, 0, "Go Thru the door");
+					int txtposx = 450;	//text position x
+					al_draw_text(font24, al_map_rgb(0, 255, 0), txtposx, HEIGHT - 38, 0, "!!!Go Thru the door!!!");
+					al_draw_bitmap(Trophy, txtposx + 250 , HEIGHT - 42, 0);
+					al_draw_bitmap(Trophy, txtposx - 50, HEIGHT - 42, 0);
 				}
 
 				if (Lives <= 0)
@@ -592,7 +595,7 @@ int main(void)
 
 
 				al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
-				//al_draw_bitmap(en, xE, 350, NULL);------------------------------
+				al_draw_bitmap(en, xE, 350, NULL);
 				bull.DrawBullet(bullets, num_bullets);
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
 				
@@ -616,6 +619,7 @@ int main(void)
 			////If there is a game over
 			else
 			{
+				//al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.displayScore(man));
 				man.gameOver(WIDTH, HEIGHT, man,Score);
 			}
 

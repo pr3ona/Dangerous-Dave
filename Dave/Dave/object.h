@@ -54,7 +54,7 @@ private:
 	int y;
 	int boundx;
 	int boundy;
-	int stageNumber = 01;
+	int stageNumber = 0;
 
 public:
 	void displayFont(const int&, const int&, int&); //display font at the top and bottom of the screen
