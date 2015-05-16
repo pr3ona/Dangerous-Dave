@@ -167,10 +167,10 @@ void Bullet::DrawBullet(Bullet bullet[], int size)
 	for (int i = 0; i < size; i++)
 	{
 		if (bullet[i].live)
-			al_draw_filled_circle(bullet[i].x, bullet[i].y, 2 ,al_map_rgb(255, 255, 255));
+			al_draw_filled_circle(bullet[i].x, bullet[i].y, 3 ,al_map_rgb(255, 255, 255));
 	}
 }
-void Bullet::FireBullet(Bullet bullet[], int size, int x, int y)
+void Bullet::FireBullet(Bullet bullet[], int size, int Davex, int Davey)
 {
 	
 	for (int i = 0; i < size; i++)
@@ -178,8 +178,8 @@ void Bullet::FireBullet(Bullet bullet[], int size, int x, int y)
 	
 		if (!bullet[i].live)
 		{
-			bullet[i].x = x + 17;
-			bullet[i].y = y - 50;
+			bullet[i].x = Davex + 17;
+			bullet[i].y = Davey;
 			bullet[i].live = true;
 			break;
 		}
