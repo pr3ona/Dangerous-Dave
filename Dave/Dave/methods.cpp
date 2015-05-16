@@ -43,11 +43,11 @@ void Dave::gameOver(Dave &man, bool &isGameover)
 		isGameover = true;
 }
 
-void Dave::gameOver(int WIDTH, int HEIGHT, Dave &man)
+void Dave::gameOver(int WIDTH, int HEIGHT, Dave &man, int Score)
 {
 
 	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
-	al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH/2, HEIGHT/2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.score);
+	al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH/2, HEIGHT/2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", Score);
 }
 
 int Dave::DecreaseLife(Dave &man)

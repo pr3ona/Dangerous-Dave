@@ -487,28 +487,28 @@ int main(void)
 
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 105);
 
-				if (Davex>0 && Davex<205 && Davey<HEIGHT - 105)
+				if (Davex>0 && Davex<205 && Davey<HEIGHT - 105 && Davey> HEIGHT-200)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 155);
 
-				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205 && Davey>275)
+				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205 && Davey>330)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
+				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305 && Davey> HEIGHT-430)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
 
-				if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 200)
+				if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 200&& Davey>HEIGHT-325)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-				if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 355)
+				if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 355 && Davey>HEIGHT-480)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 450);
 
-				if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 300)
-					jump = (Davey + DaveHeight / 2 >= HEIGHT - 400);
+				if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 300&& Davey>HEIGHT-425)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 410);
 
-				if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200 && Davey> HEIGHT - 400)
+				if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200 && Davey> HEIGHT - 275)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-				if (Davex > 855 && Davex < 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 250)
+				if (Davex > 855 && Davex < 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 225)
 				{
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 205);
 				}
@@ -592,7 +592,7 @@ int main(void)
 
 
 				al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
-				al_draw_bitmap(en, xE, 350, NULL);
+				//al_draw_bitmap(en, xE, 350, NULL);------------------------------
 				bull.DrawBullet(bullets, num_bullets);
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
 				
@@ -616,7 +616,7 @@ int main(void)
 			////If there is a game over
 			else
 			{
-				man.gameOver(WIDTH, HEIGHT, man);
+				man.gameOver(WIDTH, HEIGHT, man,Score);
 			}
 
 			al_flip_display();

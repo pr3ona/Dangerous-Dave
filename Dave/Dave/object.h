@@ -36,7 +36,7 @@ public:
 	void MoveDown(Dave &man);
 	void MoveRight(Dave &man);
 	void JumpUp(Dave &man, bool&, const int, const int);
-	void gameOver(int, int, Dave &man);
+	void gameOver(int, int, Dave &man,int);
 	void gameOver(Dave &man, bool&);
 	void displayScoreLives(Dave &man);
 	void collideWall();
