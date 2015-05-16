@@ -5,7 +5,7 @@
 #include <allegro5\allegro_ttf.h>
 #include <allegro5/allegro_image.h>
 #include "mappy_A5.h"
-//
+
 
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
@@ -20,35 +20,38 @@ int main(void)
 
 	//primitive variable
 	int countFPS = 0;
+	int DaveWidth = 0;
+	int DaveHeight = 0;
+
 	bool done = false;
 	bool keys[5] = { false, false, false, false, false };
-	Bullet bullets[num_bullets];
-	Enemies enemy[num_enemies];
 	bool redraw = true;
 	bool jump = false;
 	bool isGameOver = false;
-	int DaveWidth = 0;
-	int DaveHeight = 0;
 	bool collision = false;
+
+	Bullet bullets[num_bullets];
+	Enemies enemy[num_enemies];
+
+	//object variables
+	Dave man;
+	Level lvl; // object to display text on top and bottom of screen 
+	Bullet bull;
+	Enemies enem;
 
 	//mappy-------
 	int xOff = 0;
 	int yOff = 0;
 	//-----------
 
-	int Davex = 100; //allows us to change the players position from this class youll see why...
-	int Davey = 150; //allows us to change the players position from this class youll see why...
-	int Movespeed = 5; //allows us to change the players speed from this class youll see why...
-	int velx = 0; //youll see why...
-	int vely = 0; //youll see why...
-	int jumpSpeed = 11;
-	//object variables
-	Dave man;
-	Level lvl; // text on top and bottom of screen 
-	Bullet bull;
-	Enemies enem;
-
-
+	//Dave init specs
+	int Davex = 100; //allows us to change the players position from this class
+	int Davey = 150; //allows us to change the players position from this class
+	int Movespeed = 5; //allows us to change the players speed from this class
+	int velx = 0;
+	int vely = 0;
+	int jumpSpeed = 13;
+	///////////////////
 
 	//Allegro variables
 	ALLEGRO_DISPLAY *display = NULL;
@@ -75,49 +78,55 @@ int main(void)
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_install_keyboard();
-	al_init_image_addon(); //mappt
+	al_init_image_addon(); //mappy
 
 	//mappy
 	if (MapLoad("game.fmp", 1))
 		return -5;
 	//-------------
 
+	///Load pictures
 	Dave = al_load_bitmap("man.png");
 	Trophy = al_load_bitmap("trophy.png");
 	Door = al_load_bitmap("door.png");
 	redGem = al_load_bitmap("redGem.png");
 	blueGem = al_load_bitmap("blueGem.png");
 	//fire = al_load_bitmap(fire.png");
+	////////
 
+	//Bounds for collision
 	DaveWidth = al_get_bitmap_width(Dave);
 	DaveHeight = al_get_bitmap_height(Dave);
 	int redGemWidth = al_get_bitmap_width(redGem);
 	int redGemHeight = al_get_bitmap_width(redGem);
 
-	//Bounds for collision
 	int Dbx = DaveWidth / 2; //Dave bound x
 	int Dby = DaveHeight / 2; //Dave bound y
 	int RGBx = redGemWidth / 2;
 	int RGBy = redGemHeight / 2;
 	int RGx = 600;
 	int RGy = 500;
-
 	//////////////
+
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / FPS);
 
 	srand(time(NULL));
+
+	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
+	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
+
+	//Initialise characters
 	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby);
 	bull.InitBullet(bullets, num_bullets);
-	//enem.InitEnemy(enemy, num_enemies);
-
+	enem.InitEnemy(enemy, num_enemies);
 
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
-
+	//////Main Game Loop
 	al_start_timer(timer);
 	while (!done)
 	{
@@ -127,6 +136,7 @@ int main(void)
 
 		countFPS++;
 
+		///////Key pressed
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
 		{
 
@@ -136,18 +146,23 @@ int main(void)
 			case ALLEGRO_KEY_ESCAPE:
 				done = true;
 				break;
+
 			case ALLEGRO_KEY_UP:
 				keys[UP] = true;
 				break;
+
 				/*case ALLEGRO_KEY_DOWN:		//not needed anymore delete if necessary...
 				keys[DOWN] = true;
 				break;*/
+
 			case ALLEGRO_KEY_RIGHT:
 				keys[RIGHT] = true;
 				break;
+
 			case ALLEGRO_KEY_LEFT:
 				keys[LEFT] = true;
 				break;
+
 			case ALLEGRO_KEY_LCTRL:
 				keys[LCTRL] = true;
 				bull.FireBullet(bullets, num_bullets, Davex, Davey);
@@ -155,6 +170,7 @@ int main(void)
 			}
 		}
 
+		////////Key released
 		else if (ev.type == ALLEGRO_EVENT_KEY_UP) //checks to see if a key is released
 		{
 
@@ -191,11 +207,13 @@ int main(void)
 			}
 		}
 
+		/////Close screen
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
 			done = true;
 		}
 
+		//////Timer Event
 		else if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
 			redraw = true;
@@ -206,8 +224,6 @@ int main(void)
 				//man.MoveUp(man, jump, gravity, HEIGHT);
 				vely = -jumpSpeed;
 				jump = false;
-
-
 			}
 
 			/*if (keys[DOWN])			//Not needed anymore, delete if necessary
@@ -230,130 +246,112 @@ int main(void)
 			if (!isGameOver)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
+				bull.collideBullets(bullets, num_bullets, enemy, num_enemies, man);
+				enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
+				enem.UpdateEnemy(enemy, num_enemies);
 
-				//	man.gameOver(man, isGameOver);
+				//Collision detection
+				if (Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
+				{
+					collision = true;
+				}
+
+				else
+					collision = false;
+
+				man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 			}
-
-			//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
-			//	enem.UpdateEnemy(enemy, num_enemies);
-
-			bull.collideBullets(bullets, num_bullets, enemy, num_enemies,man);
-
-			if (Davex + Dbx > RGx - RGBx &&
-				Davex - Dbx < RGx + RGBx &&
-				Davey + Dby > RGy - RGBy &&
-				Davey - Dby < RGy + RGBy)
-			{
-				collision = true;
-			}
-			else
-				collision = false;
-
 		}
 
+		///////Redraw
 		if (redraw && al_is_event_queue_empty(event_queue))
 		{
 
 			redraw = false;
 
-			MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
-
-
-			if (!jump)
-				vely += gravity;
-
-			else
-				vely = 0;
-			Davex += velx;
-			Davey += vely;
-
-			jump = (Davey + DaveHeight / 2 >= HEIGHT - 105);
-
-			if (Davex>0 && Davex<205 && Davey<HEIGHT - 105)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 155);
-
-
-			if (Davex>105 && Davex<305 && Davey<HEIGHT - 205)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
-
-			if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
-
-			if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 200)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
-
-
-
-			if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 355)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 450);
-
-
-
-			if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 300)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 400);
-
-
-
-			if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200 && Davey> HEIGHT - 400)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
-
-			if (Davex > 855 && Davex< 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 250)
-				jump = (Davey + DaveHeight / 2 >= HEIGHT - 205);
-
-
-
-
-
-
-			// frame restriction left
-			if (Davex<1)
-				Davex = 1;
-
-			// frame restriction right
-			if (Davex>1200 - 26)
-				Davex = 1200 - 26;
-
-			redraw = true;
-
 			if (!isGameOver)
 			{
 
+				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
+
+				int posx = 200;
+
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", man.displayScore(man));
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", man.displayLives(man));
+
+				if (!jump)
+					vely += gravity;
+
+				else
+					vely = 0;
+				Davex += velx;
+				Davey += vely;
+
+				jump = (Davey + DaveHeight / 2 >= HEIGHT - 105);
+
+				if (Davex>0 && Davex<205 && Davey<HEIGHT - 105)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 155);
+
+
+				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
+
+				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305)
+				{
+
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
+
+					if (Davex > 455 && Davey >HEIGHT - 355)
+						Davey = HEIGHT - 250;
+				}
+
+				// frame restriction left
+				if (Davex<1)
+					Davex = 1;
+
+				// frame restriction right
+				if (Davex>1200 - 26)
+					Davex = 1200 - 26;
+
+				redraw = true;
+
+				////////Draw to screen
 				al_draw_bitmap(redGem, RGx, RGy, 0);
 				al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
 				bull.DrawBullet(bullets, num_bullets);
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
 				al_draw_bitmap(Trophy, 700, 150, 0);
 
+				man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
+
+				//If collision is detected execute this code
 				if (collision)
 				{
-
-
 					al_draw_bitmap(redGem, 600, 100, 0);
 
+					man.DecreaseLife(man);
 				}
 
-				//enem.DrawEnemy(enemy, num_enemies);
+				enem.DrawEnemy(enemy, num_enemies);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 				//lvl.walls(WIDTH, HEIGHT);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
-
-				//	man.displayScoreLives(man);
+				//man.displayScoreLives(man);
 			}
 
+			////If there is a game over
 			else
 			{
-				//man.gameOver(WIDTH, HEIGHT, man);
+				man.gameOver(WIDTH, HEIGHT, man);
 			}
-
-
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
 	}
 
-
-	//Destroying
+	////Destroy objects from memory
 	al_destroy_bitmap(Dave);
 	al_destroy_bitmap(blueGem);
 	al_destroy_bitmap(redGem);
@@ -366,3 +364,4 @@ int main(void)
 
 	return 0;
 }
+///End of code
