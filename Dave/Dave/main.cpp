@@ -119,7 +119,7 @@ int main(void)
 	//Initialise characters
 	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby);
 	bull.InitBullet(bullets, num_bullets);
-	//enem.InitEnemy(enemy, num_enemies);
+	enem.InitEnemy(enemy, num_enemies);
 	
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -247,8 +247,8 @@ int main(void)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
 				bull.collideBullets(bullets, num_bullets, enemy, num_enemies, man);
-				//enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
-				//	enem.UpdateEnemy(enemy, num_enemies);
+				enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
+				enem.UpdateEnemy(enemy, num_enemies);
 
 				//Collision detection
 			if (Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
@@ -333,7 +333,7 @@ int main(void)
 					man.DecreaseLife(man);
 				}
 
-				//enem.DrawEnemy(enemy, num_enemies);
+				enem.DrawEnemy(enemy, num_enemies);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 				//lvl.walls(WIDTH, HEIGHT);
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
