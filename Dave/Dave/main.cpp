@@ -5,7 +5,8 @@
 #include <allegro5\allegro_ttf.h>
 #include <allegro5/allegro_image.h>
 #include "mappy_A5.h"
-
+#include <allegro5\allegro_audio.h>
+#include <allegro5\allegro_acodec.h>
 
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
@@ -89,6 +90,9 @@ int main(void)
 	ALLEGRO_BITMAP *fire = NULL;
 	ALLEGRO_BITMAP *en = NULL;
 
+	ALLEGRO_SAMPLE *backgroundMusic = NULL;
+
+
 	//Initialization Functions
 	if (!al_init())										//initialize Allegro
 		return -1;
@@ -98,12 +102,19 @@ int main(void)
 	if (!display)										//test display object
 		return -1;
 
-	//Initialization
+	//Initialization of addons
 	al_init_primitives_addon();
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_install_keyboard();
 	al_init_image_addon(); //mappy
+	al_install_audio();
+	al_init_acodec_addon();
+	al_reserve_samples(1);		//creates channels ...(number of channels)... and a *default mixer which 
+								//converts many sounds being played simultaneously 
+								//together, to output to a signle channel since speakers are only single channel
+	backgroundMusic = al_load_sample("AnimalsRemix.ogg"); //allegro can't play mp3s
+	///////////////
 
 	//mappy
 	if (MapLoad("game.fmp", 1))
@@ -221,6 +232,9 @@ int main(void)
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
+
+	al_play_sample(backgroundMusic, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
+
 
 	//////Main Game Loop
 	al_start_timer(timer);
@@ -643,6 +657,7 @@ int main(void)
 	
 
 	////Destroy objects from memory
+	al_destroy_sample(backgroundMusic);
 	al_destroy_bitmap(Dave);
 	al_destroy_bitmap(en);
 	al_destroy_bitmap(blueGem1);
