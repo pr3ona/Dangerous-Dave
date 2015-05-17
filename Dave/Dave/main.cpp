@@ -62,9 +62,6 @@ int main(void)
 
 	bool liveTrophy = true;
 
-
-	
-
 	//mappy-------
 	int xOff = 0;
 	int yOff = 0;
@@ -102,7 +99,6 @@ int main(void)
 
 	ALLEGRO_BITMAP *fire = NULL;
 	
-	ALLEGRO_BITMAP *background = NULL;
 	ALLEGRO_BITMAP *title = NULL;
 	ALLEGRO_BITMAP *lost = NULL;
 
@@ -166,6 +162,7 @@ int main(void)
 	title = al_load_bitmap("Dave_title.png");
 	lost = al_load_bitmap("Dave_end.png");
 
+	
 	//mappy
 	if (MapLoad("game.fmp", 1))
 		return -5;
@@ -250,8 +247,10 @@ int main(void)
 
 	int Dbx = DaveWidth / 2; //Dave bound x
 	int Dby = DaveHeight / 2; //Dave bound y
+	
 	int Ebx = EnemyWidth / 2;
 	int Eby = EnemyHeight / 2;
+	
 	int RGBx = redGemWidth / 2;
 	int RGBy = redGemHeight / 2;
 	int RGx = 600;
@@ -597,8 +596,8 @@ int main(void)
 
 			if (state == TITLE)
 			{
-				al_flip_display();
-				al_clear_to_color(al_map_rgb(0, 0, 0));
+				//al_flip_display();
+				//al_clear_to_color(al_map_rgb(0, 0, 0));
 				al_draw_bitmap(title, 0, 0, 0);
 			
 			}
@@ -749,8 +748,11 @@ int main(void)
 
 
 				al_draw_bitmap(iDave, Davex, Davey - DaveHeight / 2, 0);
-				al_draw_bitmap(en, xE, 350, NULL);
+				
+				al_draw_bitmap(en, xE, 350, NULL);		//draw enemy to map
+				
 				bull.DrawBullet(bullets, num_bullets);
+				
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
 				
 				if (liveTrophy)
@@ -791,7 +793,6 @@ int main(void)
 	////Destroy objects from memory
 	al_destroy_bitmap(title);
 	al_destroy_bitmap(lost);
-	al_destroy_bitmap(background);
 	al_destroy_sample(backgroundMusic);
 	al_destroy_sample_instance(walking);
 	al_destroy_sample_instance(shooting);
@@ -844,11 +845,11 @@ int main(void)
 		}
 		else if (state == PLAYING)
 		{
-/*			//Initialise again..... no ideawhy
+			//Initialise again..... no ideawhy
 			man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
 			//bull.InitBullet(bullets, num_bullets);
 			enem.InitEnemy(enemy, num_enemies, en);
-			*/
+			
 		}
 		else if (state == GAMEOVER)
 		{
