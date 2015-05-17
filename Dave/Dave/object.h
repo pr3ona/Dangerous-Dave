@@ -2,7 +2,8 @@
 enum IDS{ PLAYER, BULLET, ENEMY };
 
 //Key ID
-enum KEYS{ UP, DOWN, LEFT, RIGHT, LCTRL };
+enum KEYS{ UP, DOWN, LEFT, RIGHT, LCTRL, ESCAPE, SPACE };
+enum STATE{TITLE, PLAYING, GAMEOVER};
 
 //Our Player
 class Dave
@@ -60,6 +61,7 @@ public:
 	void displayFont(const int&, const int&, int&); //display font at the top and bottom of the screen
 	void walls(const int&, const int&); //display the walls of the screen
 	int displayLevel(Level &lvl);
+	void changeState(int &, int);
 	
 };
 

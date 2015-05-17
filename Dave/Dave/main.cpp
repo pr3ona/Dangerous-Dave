@@ -7,6 +7,7 @@
 #include "mappy_A5.h"
 #include <allegro5\allegro_audio.h>
 #include <allegro5\allegro_acodec.h>
+#include <iostream>
 
 //GLOBAL VARIABLES
 const int WIDTH = 1200;
@@ -17,6 +18,12 @@ const int num_enemies = 3;
 const int gravity = 1;
 int Lives = 3;
 int Score = 0;
+
+//object variables
+Dave man;
+Level lvl; // object to display text on top and bottom of screen 
+Bullet bull;
+Enemies enem;
 
 int main(void)
 {
@@ -29,7 +36,7 @@ int main(void)
 	int EnemyHeight = 0;
 
 	bool done = false;
-	bool keys[5] = { false, false, false, false, false };
+	bool keys[] = { false, false, false, false, false, false };
 	bool redraw = true;
 	bool jump = false;
 	bool isGameOver = false;
@@ -50,11 +57,7 @@ int main(void)
 	Bullet bullets[num_bullets];
 	Enemies enemy[num_enemies];
 
-	//object variables
-	Dave man;
-	Level lvl; // object to display text on top and bottom of screen 
-	Bullet bull;
-	Enemies enem;
+	
 
 	//mappy-------
 	int xOff = 0;
@@ -69,6 +72,10 @@ int main(void)
 	int vely = 0;
 	int jumpSpeed = 13;
 	///////////////////
+
+	/////////STATE////////////////TITLE/////PLAYING///GAMEOVER
+	int state = -1;
+	///////////////
 
 	//Allegro variables
 	ALLEGRO_DISPLAY *display = NULL;
@@ -89,6 +96,9 @@ int main(void)
 
 	ALLEGRO_BITMAP *fire = NULL;
 	ALLEGRO_BITMAP *en = NULL;
+	ALLEGRO_BITMAP *background = NULL;
+	ALLEGRO_BITMAP *title = NULL;
+	ALLEGRO_BITMAP *lost = NULL;
 
 	ALLEGRO_SAMPLE *backgroundMusic = NULL;
 	ALLEGRO_SAMPLE_INSTANCE *walking = NULL;
@@ -145,11 +155,10 @@ int main(void)
 	al_attach_sample_instance_to_mixer(newlife, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(gameover, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(death, al_get_default_mixer());
-
-
-	
-	
 	///////////////
+
+	title = al_load_bitmap("Dave_title.png");
+	lost = al_load_bitmap("Dave_end.png");
 
 	//mappy
 	if (MapLoad("game.fmp", 1))
@@ -258,6 +267,8 @@ int main(void)
 	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
 	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
 
+
+	lvl.changeState(state, TITLE);
 	//Initialise characters
 	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby);
 	bull.InitBullet(bullets, num_bullets);
@@ -268,7 +279,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
-al_play_sample(backgroundMusic, 0.5, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_play_sample(backgroundMusic, 0.1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 
 
 	//////Main Game Loop
@@ -297,7 +308,7 @@ al_play_sample(backgroundMusic, 0.5, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 			{
 
 			case ALLEGRO_KEY_ESCAPE:
-				done = true;
+				keys[ESCAPE] = true;
 				break;
 
 			case ALLEGRO_KEY_UP:
@@ -352,7 +363,7 @@ al_play_sample(backgroundMusic, 0.5, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 				break;
 
 			case ALLEGRO_KEY_ESCAPE:
-				done = true;
+				keys[ESCAPE] = false;
 				break;
 
 			case ALLEGRO_KEY_LCTRL:
@@ -539,7 +550,25 @@ al_play_sample(backgroundMusic, 0.5, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 					
 					//man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 			}
-		}
+	
+			if (state == TITLE)
+			{
+				if (keys[SPACE])
+					state = PLAYING;
+			}
+			else if (state == PLAYING)
+			{
+				if (keys[ESCAPE])
+					state = GAMEOVER;
+
+			}
+			else if (state == GAMEOVER)
+			{
+				if (keys[SPACE])
+					done = true;
+			}
+
+	}
 
 		///////Redraw
 		if (redraw && al_is_event_queue_empty(event_queue))
@@ -549,6 +578,22 @@ al_play_sample(backgroundMusic, 0.5, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 
 			if (!isGameOver)
 			{
+
+				if (state == TITLE)
+				{
+					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH/ 2, HEIGHT /2, ALLEGRO_ALIGN_CENTER, "Press SPACEBAR to play.");
+				}
+				else if (state == PLAYING)
+				{
+					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "Press SPACE to end.");
+
+				}
+				else if (state == GAMEOVER)
+				{
+
+					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "Press SPACE to exit the game.");
+				}
+
 
 				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
 
@@ -712,6 +757,9 @@ al_play_sample(backgroundMusic, 0.5, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 	
 
 	////Destroy objects from memory
+	al_destroy_bitmap(title);
+	al_destroy_bitmap(lost);
+	al_destroy_bitmap(background);
 	al_destroy_sample(backgroundMusic);
 	al_destroy_sample_instance(walking);
 	al_destroy_sample_instance(shooting);

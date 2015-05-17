@@ -63,6 +63,45 @@ int Level::displayLevel(Level &lvl)
 	return lvl.stageNumber +1;
 }
 
+void Level::changeState(int &state, int newState)
+{
+	if (state == TITLE)
+	{
+
+	}
+	else if (state == PLAYING)
+	{
+
+
+	}
+	else if (state == GAMEOVER)
+	{
+
+
+	}
+
+	state = newState;
+
+	if (state == TITLE)
+	{
+
+	}
+	else if (state == PLAYING)
+	{
+
+
+	}
+	else if (state == GAMEOVER)
+	{
+
+
+	}
+
+
+}
+
+
+
 int Dave::displayLives(Dave &man)
 {
 	return man.lives;
