@@ -26,11 +26,13 @@ private:
 	int jumpspeed;
 	int velx;
 	int vely;
+
+	ALLEGRO_BITMAP *iDave = NULL;
 	
 
 public:
 	//prototypes
-	void InitDave(Dave &man, int, int, int, int, int);
+	void InitDave(Dave &man, int, int, int, int, int, ALLEGRO_BITMAP *image);
 	void DrawDave(Dave &man, int, int,int);
 	void MoveLeft(Dave &man);
 	void MoveUp(Dave &man, bool&, const int, const int);
@@ -98,9 +100,10 @@ private:
 	int speed;
 	int boundx;
 	int boundy;
+	ALLEGRO_BITMAP *iEnemy = NULL;
 
 public:
-	void InitEnemy(Enemies enemy[], int);
+	void InitEnemy(Enemies enemy[], int, ALLEGRO_BITMAP *image);
 	void DrawEnemy(Enemies enemy[], int);
 	void StartEnemy(Enemies enemy[], int, int, int);
 	void UpdateEnemy(Enemies enemy[], int);

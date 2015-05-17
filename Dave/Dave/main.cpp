@@ -19,11 +19,18 @@ const int gravity = 1;
 int Lives = 3;
 int Score = 0;
 
+void changeState(int &state, int newState, int, int, int, int, int);
+
 //object variables
 Dave man;
 Level lvl; // object to display text on top and bottom of screen 
 Bullet bull;
 Enemies enem;
+
+Bullet bullets[num_bullets];
+Enemies enemy[num_enemies];
+ALLEGRO_BITMAP *iDave = NULL;
+ALLEGRO_BITMAP *en = NULL;
 
 int main(void)
 {
@@ -54,8 +61,7 @@ int main(void)
 	bool level2 = false;
 
 	bool liveTrophy = true;
-	Bullet bullets[num_bullets];
-	Enemies enemy[num_enemies];
+
 
 	
 
@@ -81,7 +87,7 @@ int main(void)
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
-	ALLEGRO_BITMAP *Dave = NULL;
+	
 	ALLEGRO_BITMAP *Door = NULL;
 	ALLEGRO_BITMAP *Trophy = NULL;
 	ALLEGRO_BITMAP *redGem1 = NULL;
@@ -95,7 +101,7 @@ int main(void)
 	ALLEGRO_BITMAP *blueGem4 = NULL;
 
 	ALLEGRO_BITMAP *fire = NULL;
-	ALLEGRO_BITMAP *en = NULL;
+	
 	ALLEGRO_BITMAP *background = NULL;
 	ALLEGRO_BITMAP *title = NULL;
 	ALLEGRO_BITMAP *lost = NULL;
@@ -166,7 +172,7 @@ int main(void)
 	//-------------
 
 	///Load pictures
-	Dave = al_load_bitmap("man.png");
+	iDave = al_load_bitmap("man.png");
 	en = al_load_bitmap("enemy.png");
 	Trophy = al_load_bitmap("trophy.png");
 	Door = al_load_bitmap("door.png");
@@ -187,8 +193,8 @@ int main(void)
 	////////
 
 	//Bounds for collision
-	DaveWidth = al_get_bitmap_width(Dave);
-	DaveHeight = al_get_bitmap_height(Dave);
+	DaveWidth = al_get_bitmap_width(iDave);
+	DaveHeight = al_get_bitmap_height(iDave);
 	EnemyWidth = al_get_bitmap_width(en);
 	EnemyHeight = al_get_bitmap_height(en);
 
@@ -268,11 +274,13 @@ int main(void)
 	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
 
 
-	lvl.changeState(state, TITLE);
+	changeState(state, TITLE, Davex, Davey, Movespeed, Dbx, Dby);
+
+
 	//Initialise characters
-	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby);
+	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
 	bull.InitBullet(bullets, num_bullets);
-	enem.InitEnemy(enemy, num_enemies);
+	enem.InitEnemy(enemy, num_enemies, en);
 
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -411,6 +419,20 @@ int main(void)
 				//al_play_sample_instance(walking);
 				
 			}
+			
+			if (state == TITLE)
+			{ 
+			
+			}
+			else if (state == PLAYING)
+			{
+
+			}
+			else if (state == GAMEOVER)
+			{
+
+			}
+
 
 			if (!isGameOver)
 			{
@@ -427,7 +449,7 @@ int main(void)
 					man.DecreaseLife(man); // Lives -= 1;
 					Davex = 100;
 					Davey = 150;
-					al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
+					al_draw_bitmap(iDave, Davex, Davey - DaveHeight / 2, 0);
 					al_play_sample_instance(death);
 				}
 
@@ -720,7 +742,7 @@ int main(void)
 
 
 
-				al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
+				al_draw_bitmap(iDave, Davex, Davey - DaveHeight / 2, 0);
 				al_draw_bitmap(en, xE, 350, NULL);
 				bull.DrawBullet(bullets, num_bullets);
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
@@ -770,7 +792,7 @@ int main(void)
 	al_destroy_sample_instance(newlife);
 	al_destroy_sample_instance(gameover);
 	al_destroy_sample_instance(death);
-	al_destroy_bitmap(Dave);
+	al_destroy_bitmap(iDave);
 	al_destroy_bitmap(en);
 	al_destroy_bitmap(blueGem1);
 	al_destroy_bitmap(blueGem2);
@@ -790,3 +812,45 @@ int main(void)
 
 	return 0;
 	}
+
+
+	void changeState(int &state, int newState, int Davex, int Davey, int Movespeed, int Dbx, int Dby)
+	{
+		if (state == TITLE)
+		{
+
+		}
+		else if (state == PLAYING)
+		{
+
+
+		}
+		else if (state == GAMEOVER)
+		{
+
+
+		}
+
+		state = newState;
+
+		if (state == TITLE)
+		{
+
+		}
+		else if (state == PLAYING)
+		{
+			//Initialise again..... no ideawhy
+			man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
+			//bull.InitBullet(bullets, num_bullets);
+			enem.InitEnemy(enemy, num_enemies, en);
+
+		}
+		else if (state == GAMEOVER)
+		{
+
+
+		}
+
+
+	}
+

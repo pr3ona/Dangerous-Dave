@@ -6,7 +6,7 @@
 #include <allegro5\allegro_audio.h>
 #include <allegro5\allegro_acodec.h>
 
-void Dave::InitDave(Dave &man, int x, int y, int Movespeed, int bx, int by)
+void Dave::InitDave(Dave &man, int x, int y, int Movespeed, int bx, int by, ALLEGRO_BITMAP *Dave)
 {
 	man.x = x;
 	man.y = y;
@@ -16,6 +16,10 @@ void Dave::InitDave(Dave &man, int x, int y, int Movespeed, int bx, int by)
 	man.score = 0;
 	man.boundx = bx;
 	man.speed = Movespeed;
+
+	if (Dave != NULL) 
+	      man.iDave = Dave;
+
 }
 
 void Dave::DrawDave(Dave &man, int x, int y, int imageRad)
@@ -61,43 +65,6 @@ int Dave::displayScore(Dave &man)
 int Level::displayLevel(Level &lvl)
 {
 	return lvl.stageNumber +1;
-}
-
-void Level::changeState(int &state, int newState)
-{
-	if (state == TITLE)
-	{
-
-	}
-	else if (state == PLAYING)
-	{
-
-
-	}
-	else if (state == GAMEOVER)
-	{
-
-
-	}
-
-	state = newState;
-
-	if (state == TITLE)
-	{
-
-	}
-	else if (state == PLAYING)
-	{
-
-
-	}
-	else if (state == GAMEOVER)
-	{
-
-
-	}
-
-
 }
 
 
@@ -268,7 +235,7 @@ void Bullet::collideBullets(Bullet bullets[], int BSize, Enemies enemy[], int ES
 }
 
 
-void Enemies::InitEnemy(Enemies enemy[], int size)
+void Enemies::InitEnemy(Enemies enemy[], int size, ALLEGRO_BITMAP *image)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -278,8 +245,11 @@ void Enemies::InitEnemy(Enemies enemy[], int size)
 		enemy[i].speed = 5;
 		enemy[i].boundx = 18;
 		enemy[i].boundy = 18;
+		if (image != NULL)
+			enemy[i].iEnemy = image;
 	}
 
+	
 
 }
 
