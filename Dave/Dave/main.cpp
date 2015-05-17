@@ -49,6 +49,8 @@ int main(void)
 	int DaveHeight = 0;
 	int EnemyWidth = 0;
 	int EnemyHeight = 0;
+	int EnemyWidth2 = 0;
+	int EnemyHeight2 = 0;
 
 	bool done = false;
 	bool keys[] = { false, false, false, false, false, false };
@@ -69,6 +71,11 @@ int main(void)
 	bool level2 = false;
 	bool liveTrophy = true;
 	bool flipenemy = false;
+	bool enemy0 = true;
+	bool enemy1 = true;
+	bool enemyf0 = true;
+	bool enemyf1 = true;
+	bool shot = false;
 
 	//mappy-------
 	int xOff = 0;
@@ -184,11 +191,12 @@ int main(void)
 
 	///Load pictures
 	iDave = al_load_bitmap("man.png");
-	
+	al_convert_mask_to_alpha(iDave, al_map_rgb(0, 0, 0));
 	en[0] = al_load_bitmap("en0.bmp");
 	en[1] = al_load_bitmap("en1.bmp");
 	enf[0] = al_load_bitmap("en0f.bmp");
 	enf[1] = al_load_bitmap("en1f.bmp");
+
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -221,6 +229,8 @@ int main(void)
 	DaveHeight = al_get_bitmap_height(iDave);
 	EnemyWidth = al_get_bitmap_width(en[0]);
 	EnemyHeight = al_get_bitmap_height(en[0]);
+	EnemyWidth2 = al_get_bitmap_width(enf[0]);
+	EnemyHeight2 = al_get_bitmap_height(enf[0]);
 
 	int redGemWidth = al_get_bitmap_width(redGem1);
 	int redGemHeight = al_get_bitmap_width(redGem1);
@@ -277,7 +287,11 @@ int main(void)
 	
 	int Ebx = EnemyWidth / 2;
 	int Eby = EnemyHeight / 2;
-	
+	int Ebx2 = EnemyWidth2 / 2;
+	int Eby2 = EnemyHeight2 / 2;
+
+
+
 	int RGBx = redGemWidth / 2;
 	int RGBy = redGemHeight / 2;
 	int RGx = 600;
@@ -305,7 +319,7 @@ int main(void)
 	//Initialise characters
 	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
 	bull.InitBullet(bullets, num_bullets);
-	//enem.InitEnemy(enemy, num_enemies, en[]);
+	enem.InitEnemy(enemy, num_enemies, en[2], enf[2]);
 
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -451,15 +465,14 @@ int main(void)
 			if (state == PLAYING)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
-				bull.collideBullets(bullets, num_bullets, enemy, num_enemies, man);
-				enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
-				enem.UpdateEnemy(enemy, num_enemies);
+				//bull.collideBullets(bullets, num_bullets, enemy, num_enemies, man);
+			//	enem.StartEnemy(enemy, num_enemies, WIDTH, HEIGHT);
+				//enem.UpdateEnemy(enemy, num_enemies);
 
 				//Collision  enemy
 				if (Davex + Dbx > xE - Ebx && Davex - Dbx < xE + Ebx && Davey + Dby > yE - Eby &&	Davey - Dby < yE + Eby)
 				{
 					
-
 					man.DecreaseLife(man); // Lives -= 1;
 					Davex = 100;
 					Davey = 150;
@@ -558,6 +571,27 @@ int main(void)
 					liveTrophy = false;	
 				}
 
+				//Bullet collision
+				if (Davex + Dbx > xE - Ebx && Davex - Dbx < xE + Ebx && Davey + Dby > yE - Eby &&	Davey - Dby < yE + Eby)
+				{
+
+					man.DecreaseLife(man); // Lives -= 1;
+					Davex = 100;
+					Davey = 150;
+					al_draw_bitmap(iDave, Davex, Davey - DaveHeight / 2, 0);
+					al_play_sample_instance(death);
+				}
+
+				shot = bull.collideBullets(bullets, num_bullets, Ebx, EnemyWidth, Eby, EnemyHeight, man, shot);
+
+				if (shot)
+				{
+					enemy0 = false;
+					enemy1 = false;
+					enemyf0 = false;
+					enemyf1 = false;
+				}
+
 				//trophy collision 
 				if (!liveTrophy)
 				{
@@ -617,22 +651,6 @@ int main(void)
 		
 			else if (state == PLAYING)
 			{
-
-			/*	if (state == TITLE)
-				{
-					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH/ 2, HEIGHT /2, ALLEGRO_ALIGN_CENTER, "Press SPACEBAR to play.");
-				}
-				else if (state == PLAYING)
-				{
-					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "Press SPACE to end.");
-
-				}
-				else if (state == GAMEOVER)
-				{
-
-					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "Press SPACE to exit the game.");
-				}*/
-
 
 				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
 
@@ -720,24 +738,6 @@ int main(void)
 
 				redraw = true;
 
-				//If gem collision is detected execute this code
-				if (collision)
-				{
-					man.increaseScore(man);
-					//al_draw_bitmap(redGem, 600, 100, 0);
-					liveGem1 = false;
-				}
-				
-
-				//If trophy collision is detected execute this code
-				if (collisiont)
-				{
-					man.increaseScore(man);
-					//al_draw_bitmap(redGem, 600, 100, 0);
-					liveGem1 = false;
-				}
-				////////Draw to screen
-				
 				if (liveGem1)
 				{
 					al_draw_bitmap(redGem1, RGx, RGy, 0);
@@ -782,32 +782,33 @@ int main(void)
 					al_flip_display();
 					al_rest(8);
 				//	changeState(state, GAMEOVER, Davex, Davey, Movespeed, Dbx, Dby);
-					//done = true;
+					done = true;
 					//goto END;
 				}
 
 
 
 				al_draw_bitmap(iDave, Davex, Davey - DaveHeight / 2, 0);
+				
 
 				//////enemy one level 1
-				if (xE >= 875 && a > 0)
-				{
-					a *= -1;
-					flipenemy = false;
-				
-				}
-					
-				if (xE < 750 && a < 0)
-				{
-					a *= -1;
-					flipenemy = true;
-				
-				}
+				if (enemy0 == true && enemy1 == true && enemyf0 == true && enemyf1 == true)
 
-				////////////
+				{
+					if (xE >= 875 && a > 0)
+					{
+						a *= -1;
+						flipenemy = false;
 
-			
+					}
+
+					if (xE < 750 && a < 0)
+					{
+						a *= -1;
+						flipenemy = true;
+
+					}
+
 					if (++frameCount >= frameDelay)
 					{
 						if (++curFrame >= maxFrame)
@@ -815,19 +816,25 @@ int main(void)
 
 						frameCount = 0;
 					}
-					
+
 					if (flipenemy)
 					{
 						al_draw_bitmap(enf[curFrame], xE += a * 3, 350, 0);
 					}
-			
+
 					if (!flipenemy)
 					{
 						al_draw_bitmap(en[curFrame], xE += a * 3, 350, 0);		//draw enemy to map
 					}
-
+				}
+				
 				bull.DrawBullet(bullets, num_bullets);
 				
+
+
+
+
+
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
 				
 				if (liveTrophy)
@@ -840,22 +847,18 @@ int main(void)
 					changeState(state, GAMEOVER, Davex, Davey, Movespeed, Dbx, Dby);
 					al_play_sample_instance(gameover);
 				}
+
 				//man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 
-				
-			//
 				//enem.DrawEnemy(enemy, num_enemies);
-				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
-				//lvl.walls(WIDTH, HEIGHT);
-				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
-				//man.displayScoreLives(man);
+
 			}
 			
 					else if (state == GAMEOVER)
 					{
 						al_draw_bitmap(lost, 0, 0, 0);
-						al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Final score: %i", man.displayScore(man));
-				
+						al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH / 2, 400, ALLEGRO_ALIGN_CENTRE, "Final score: %i", man.displayScore(man));
+						done = true;
 					}
 
 			al_flip_display();

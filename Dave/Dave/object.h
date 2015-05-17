@@ -83,7 +83,7 @@ public:
 	void DrawBullet(Bullet bullet[], int);
 	void FireBullet(Bullet bullet[], int, int, int);
 	void UpdateBullet(Bullet bullet[], int, int);
-	void collideBullets(Bullet bullet[], int, Enemies enemy[], int, Dave &man);
+	int collideBullets(Bullet bullet[], int, int, int, int, int, Dave &man, bool);
 
 };
 
@@ -101,9 +101,10 @@ private:
 	int boundx;
 	int boundy;
 	ALLEGRO_BITMAP *iEnemy = NULL;
+	ALLEGRO_BITMAP *iEnemy2 = NULL;
 
 public:
-	void InitEnemy(Enemies enemy[], int, ALLEGRO_BITMAP *image);
+	void InitEnemy(Enemies enemy[], int, ALLEGRO_BITMAP *image, ALLEGRO_BITMAP *image2);
 	void DrawEnemy(Enemies enemy[], int);
 	void StartEnemy(Enemies enemy[], int, int, int);
 	void UpdateEnemy(Enemies enemy[], int);

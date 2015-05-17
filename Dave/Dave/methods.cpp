@@ -94,61 +94,6 @@ void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Di
 	al_draw_text(font24, al_map_rgb(0, 255, 0), 5, 5, 0, "Level:000000000000000000 ");
 }
 
-
-/*										
-void Dave:: MoveLeft(Dave &man)
-{
-	man.x -= man.speed;
-	if (man.x < 0)
-		man.x = 0;
-
-}
-
-void Dave:: MoveUp(Dave &man, bool &jump, const int gravity, const int HEIGHT)
-{
-	//man.vely = -man.jumpspeed;
-	//jump = false;
-	
-	man.y -= man.jumpspeed;
-	jump = true;
-
-	if (man.y < 0)
-		man.y = 50;
-}
-void Dave:: MoveDown(Dave &man)
-{
-	man.y += man.speed;
-	if (man.y > 700)
-		man.y = 700;
-
-}
-void Dave:: MoveRight(Dave &man)
-{
-	man.x += man.speed;
-	if (man.x > 1200)
-		man.x = 1200;
-}
-
-void Dave::JumpUp(Dave &man, bool &jump, const int gravity, const int HEIGHT)
-{
-
-	if (jump)
-	{
-		man.y += gravity;
-	}
-	else
-	{
-		vely = 0;
-	}
-
-	man.y += man.vely;
-
-	jump = man.y + 75 >= 560;
-
-	if (jump)
-		man.y = HEIGHT - 75;
-}
-*/
 void Bullet::InitBullet(Bullet bullet[], int size)
 {
 
@@ -202,34 +147,33 @@ void Bullet::UpdateBullet(Bullet bullet[], int size, int WIDTH)
 	}
 }
 
-void Bullet::collideBullets(Bullet bullets[], int BSize, Enemies enemy[], int ESize, Dave &man)
+int Bullet::collideBullets(Bullet bullets[], int num_bullets, int Ebx, int EnemyWidth, int Eby, int EnemyHeight, Dave &man, bool shot)
 {
-	for (int i = 0; i < BSize; i++)
+	for (int i = 0; i < num_bullets; i++)
 	{
 		if (bullets[i].live)
 		{
-			for (int j = 0; j < ESize; j++)
-			{
-				if (enemy[j].live)
+				if (!shot)
 				{
-					if (bullets[i].x >(enemy[j].x - enemy[j].boundx) &&
-						bullets[i].x < (enemy[j].x + enemy[j].boundx) &&
-						bullets[i].y >(enemy[j].y - enemy[j].boundy) &&
-						bullets[i].y < (enemy[j].y + enemy[j].boundy))
+					if (bullets[i].x > EnemyWidth - Ebx &&
+						bullets[i].x < EnemyWidth + Ebx &&
+						bullets[i].y > EnemyHeight - Eby &&
+						bullets[i].y < EnemyHeight + Eby)
 					{
 						bullets[i].live = false;
-						enemy[j].live = false;
+						shot = false;
 						man.score++;
 					}
 				}
-			}
+			
 		}
 	}
-
+	
+	return shot;
 }
 
 
-void Enemies::InitEnemy(Enemies enemy[], int size, ALLEGRO_BITMAP *image)
+void Enemies::InitEnemy(Enemies enemy[], int size, ALLEGRO_BITMAP *image, ALLEGRO_BITMAP *image2)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -239,8 +183,12 @@ void Enemies::InitEnemy(Enemies enemy[], int size, ALLEGRO_BITMAP *image)
 		enemy[i].speed = 5;
 		enemy[i].boundx = 18;
 		enemy[i].boundy = 18;
+
+
 		if (image != NULL)
 			enemy[i].iEnemy = image;
+		if (image2 != NULL)
+			enemy[i].iEnemy2 = image2;
 	}
 
 	
