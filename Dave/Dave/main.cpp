@@ -27,10 +27,18 @@ Level lvl; // object to display text on top and bottom of screen
 Bullet bull;
 Enemies enem;
 
+///////Animate the enemy
+const int maxFrame = 2;
+int curFrame = 0;
+int frameCount = 0;
+int frameDelay = 5;
+/////////
+
 Bullet bullets[num_bullets];
 Enemies enemy[num_enemies];
 ALLEGRO_BITMAP *iDave = NULL;
-ALLEGRO_BITMAP *en = NULL;
+ALLEGRO_BITMAP *en[maxFrame];
+ALLEGRO_BITMAP *enf[maxFrame];
 
 int main(void)
 {
@@ -59,8 +67,8 @@ int main(void)
 	bool liveGem8 = true;
 	bool level1 = true;
 	bool level2 = false;
-
 	bool liveTrophy = true;
+	bool flipenemy = false;
 
 	//mappy-------
 	int xOff = 0;
@@ -79,6 +87,12 @@ int main(void)
 	/////////STATE////////////////TITLE/////PLAYING///GAMEOVER
 	int state = -1;
 	///////////////
+
+	///////Enemy movement
+	int degree = 0;
+	/////////////
+
+	
 
 	//Allegro variables
 	ALLEGRO_DISPLAY *display = NULL;
@@ -170,7 +184,20 @@ int main(void)
 
 	///Load pictures
 	iDave = al_load_bitmap("man.png");
-	en = al_load_bitmap("enemy.png");
+	
+	en[0] = al_load_bitmap("en0.bmp");
+	en[1] = al_load_bitmap("en1.bmp");
+	enf[0] = al_load_bitmap("en0f.bmp");
+	enf[1] = al_load_bitmap("en1f.bmp");
+
+	for (int i = 0; i < 2; i++)
+	{
+		al_convert_mask_to_alpha(en[i], al_map_rgb(255, 0, 255));
+		al_convert_mask_to_alpha(enf[i], al_map_rgb(255, 0, 255));
+	}
+
+	
+
 	Trophy = al_load_bitmap("trophy.png");
 	Door = al_load_bitmap("door.png");
 	//red gems
@@ -192,8 +219,8 @@ int main(void)
 	//Bounds for collision
 	DaveWidth = al_get_bitmap_width(iDave);
 	DaveHeight = al_get_bitmap_height(iDave);
-	EnemyWidth = al_get_bitmap_width(en);
-	EnemyHeight = al_get_bitmap_height(en);
+	EnemyWidth = al_get_bitmap_width(en[0]);
+	EnemyHeight = al_get_bitmap_height(en[0]);
 
 	int redGemWidth = al_get_bitmap_width(redGem1);
 	int redGemHeight = al_get_bitmap_width(redGem1);
@@ -278,7 +305,7 @@ int main(void)
 	//Initialise characters
 	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
 	bull.InitBullet(bullets, num_bullets);
-	enem.InitEnemy(enemy, num_enemies, en);
+	//enem.InitEnemy(enemy, num_enemies, en[]);
 
 	//Register/ Load sources to event queue 
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -297,13 +324,6 @@ int main(void)
 
 		countFPS++;
 
-		//enemy one level 1
-		if (xE >= 900 && a>0)
-			a *= -1;
-		if (xE<750 && a<0)
-			a *= -1;
-
-		xE += a * 3;
 
 		///////Key pressed
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //checks to see if a key is pressed
@@ -748,9 +768,43 @@ int main(void)
 
 
 				al_draw_bitmap(iDave, Davex, Davey - DaveHeight / 2, 0);
+
+				//////enemy one level 1
+				if (xE >= 900 && a > 0)
+				{
+					a *= -1;
+					flipenemy = false;
 				
-				al_draw_bitmap(en, xE, 350, NULL);		//draw enemy to map
+				}
+					
+				if (xE < 750 && a < 0)
+				{
+					a *= -1;
+					flipenemy = true;
 				
+				}
+
+				////////////
+
+			
+					if (++frameCount >= frameDelay)
+					{
+						if (++curFrame >= maxFrame)
+							curFrame = 0;
+
+						frameCount = 0;
+					}
+					
+					if (flipenemy)
+					{
+						al_draw_bitmap(enf[curFrame], xE, 350, 0);
+					}
+			
+					if (!flipenemy)
+					{
+						al_draw_bitmap(en[curFrame], xE, 350, 0);		//draw enemy to map
+					}
+
 				bull.DrawBullet(bullets, num_bullets);
 				
 				al_draw_bitmap(Door, 1150, HEIGHT - 150, 0);
@@ -804,7 +858,14 @@ int main(void)
 	al_destroy_sample_instance(gameover);
 	al_destroy_sample_instance(death);
 	al_destroy_bitmap(iDave);
-	al_destroy_bitmap(en);
+	 
+	for (int i = 0; i < 2; i++)
+	{
+
+		al_destroy_bitmap(en[i]);
+		al_destroy_bitmap(enf[i]);
+	}
+		
 	al_destroy_bitmap(blueGem1);
 	al_destroy_bitmap(blueGem2);
 	al_destroy_bitmap(blueGem3);
@@ -848,7 +909,7 @@ int main(void)
 			//Initialise again..... no ideawhy
 			man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
 			//bull.InitBullet(bullets, num_bullets);
-			enem.InitEnemy(enemy, num_enemies, en);
+		//	enem.InitEnemy(enemy, num_enemies, en);
 			
 		}
 		else if (state == GAMEOVER)
