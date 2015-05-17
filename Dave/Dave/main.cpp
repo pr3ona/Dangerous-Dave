@@ -46,7 +46,7 @@ int main(void)
 	bool keys[] = { false, false, false, false, false, false };
 	bool redraw = true;
 	bool jump = false;
-	bool isGameOver = false;
+	//bool isGameOver = false;
 	bool collision = false;
 	bool collisiont = false;
 	bool liveGem1 = true;
@@ -276,7 +276,6 @@ int main(void)
 
 	changeState(state, TITLE, Davex, Davey, Movespeed, Dbx, Dby);
 
-
 	//Initialise characters
 	man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
 	bull.InitBullet(bullets, num_bullets);
@@ -287,8 +286,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
-	al_play_sample(backgroundMusic, 0.1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
-
+	al_play_sample(backgroundMusic, 0.2, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 
 	//////Main Game Loop
 	al_start_timer(timer);
@@ -340,6 +338,15 @@ int main(void)
 				bull.FireBullet(bullets, num_bullets, Davex, Davey);
 				al_play_sample_instance(shooting);
 				break;
+
+			case ALLEGRO_KEY_SPACE:
+				keys[SPACE] = true;
+				if (state == TITLE)
+					changeState(state, PLAYING, Davex, Davey, Movespeed, Dbx, Dby);
+				else if (state == GAMEOVER)
+					changeState(state, PLAYING, Davex, Davey, Movespeed, Dbx, Dby);
+				break;
+
 			}
 		}
 
@@ -376,6 +383,10 @@ int main(void)
 
 			case ALLEGRO_KEY_LCTRL:
 				keys[LCTRL] = false;
+				break;
+
+			case ALLEGRO_KEY_SPACE:
+				keys[SPACE] = false;
 				break;
 			}
 		}
@@ -422,19 +433,10 @@ int main(void)
 			
 			if (state == TITLE)
 			{ 
-			
-			}
-			else if (state == PLAYING)
-			{
-
-			}
-			else if (state == GAMEOVER)
-			{
-
+				
 			}
 
-
-			if (!isGameOver)
+			if (state == PLAYING)
 			{
 				bull.UpdateBullet(bullets, num_bullets, WIDTH);
 				bull.collideBullets(bullets, num_bullets, enemy, num_enemies, man);
@@ -462,8 +464,6 @@ int main(void)
 					liveGem1 = false;
 				}
 				
-
-
 				//collision detection gem
 				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
@@ -473,7 +473,7 @@ int main(void)
 					liveGem2 = false;
 				}
 
-					//collision detection gem
+				//collision detection gem
 				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
 					man.increaseScore(man);
@@ -482,7 +482,6 @@ int main(void)
 					liveGem2 = false;
 					
 				}
-
 
 				//collision detection gem
 				if (liveGem3&&Davex + Dbx > RG3x - redGem3Width / 2 && Davex - Dbx < RG3x + redGem3Width / 2 && Davey + Dby > RG3y - redGem3Height / 2 && Davey - Dby < RG3y + redGem3Height / 2)
@@ -493,7 +492,6 @@ int main(void)
 					liveGem3 = false;
 				}
 
-
 				//collision detection gem
 				if (liveGem4&&Davex + Dbx > RG4x - redGem4Width / 2 && Davex - Dbx < RG4x + redGem4Width / 2 && Davey + Dby > RG4y - redGem4Height / 2 && Davey - Dby < RG4y + redGem4Height / 2)
 				{
@@ -502,7 +500,6 @@ int main(void)
 					//Score += 100;
 					liveGem4 = false;
 				}
-
 
 				//collision detection gem
 				if (liveGem5&&Davex + Dbx > BG1x - blueGem1Width / 2 && Davex - Dbx < BG1x + blueGem1Width / 2 && Davey + Dby > BG1y - blueGem1Height / 2 && Davey - Dby < BG1y + blueGem1Height / 2)
@@ -513,6 +510,7 @@ int main(void)
 					liveGem5 = false;
 				}
 
+				//collision detection gem
 				if (liveGem6&&Davex + Dbx > BG2x - blueGem2Width / 2 && Davex - Dbx < BG2x + blueGem1Width / 2 && Davey + Dby > BG2y - blueGem2Height / 2 && Davey - Dby < BG2y + blueGem2Height / 2)
 				{
 					man.increaseScore(man);
@@ -521,7 +519,7 @@ int main(void)
 					liveGem6 = false;
 				}
 
-
+				//collision detection gem
 				if (liveGem7&&Davex + Dbx > BG3x - blueGem3Width / 2 && Davex - Dbx < BG3x + blueGem3Width / 2 && Davey + Dby > BG3y - blueGem3Height / 2 && Davey - Dby < BG3y + blueGem3Height / 2)
 				{
 					man.increaseScore(man);
@@ -530,6 +528,7 @@ int main(void)
 					liveGem7 = false;
 				}
 
+				//collision detection gem
 				if (liveGem8&&Davex + Dbx > BG4x - blueGem4Width / 2 && Davex - Dbx < BG4x + blueGem4Width / 2 && Davey + Dby > BG4y - blueGem4Height / 2 && Davey - Dby < BG4y + blueGem4Height / 2)
 				{
 					man.increaseScore(man);
@@ -537,10 +536,6 @@ int main(void)
 					//Score += 100;
 					liveGem8 = false;
 				}
-
-
-
-
 
 				//collision detection trophy
 				if (liveTrophy&&Davex + Dbx > Tx - TBx && Davex - Dbx < Tx + TBx && Davey + Dby > Ty - TBy &&	Davey - Dby < Ty + TBy)
@@ -551,8 +546,6 @@ int main(void)
 					liveTrophy = false;	
 				}
 
-
-
 				//trophy collision 
 				if (!liveTrophy)
 				{
@@ -562,15 +555,19 @@ int main(void)
 					al_draw_bitmap(Trophy, txtposx - 50, HEIGHT - 42, 0);
 				}
 
+
 				if (man.displayLives(man) <= 0)
 				{
-					isGameOver = true;
+					changeState(state, GAMEOVER, Davex, Davey, Movespeed, Dbx, Dby);
 					al_play_sample_instance(gameover);
 				}
-					
-					
-					
+						
 					//man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
+			}
+
+			else if (state == GAMEOVER)
+			{
+
 			}
 	
 			if (state == TITLE)
@@ -598,10 +595,18 @@ int main(void)
 
 			redraw = false;
 
-			if (!isGameOver)
+			if (state == TITLE)
+			{
+				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
+				al_draw_bitmap(title, 0, 0, 0);
+			
+			}
+		
+			else if (state == PLAYING)
 			{
 
-				if (state == TITLE)
+			/*	if (state == TITLE)
 				{
 					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH/ 2, HEIGHT /2, ALLEGRO_ALIGN_CENTER, "Press SPACEBAR to play.");
 				}
@@ -614,7 +619,7 @@ int main(void)
 				{
 
 					al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "Press SPACE to exit the game.");
-				}
+				}*/
 
 
 				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
@@ -736,7 +741,8 @@ int main(void)
 					al_play_sample_instance(exitdoor);
 					al_flip_display();
 					al_rest(8);
-					done = true;
+				//	changeState(state, GAMEOVER, Davex, Davey, Movespeed, Dbx, Dby);
+					//done = true;
 					//goto END;
 				}
 
@@ -752,8 +758,12 @@ int main(void)
 					al_draw_bitmap(Trophy, Tx, Ty, 0);
 				}
 				
-
-				man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
+				if (man.displayLives(man) <= 0)
+				{
+					changeState(state, GAMEOVER, Davex, Davey, Movespeed, Dbx, Dby);
+					al_play_sample_instance(gameover);
+				}
+				//man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
 
 				
 			//
@@ -763,13 +773,13 @@ int main(void)
 				//lvl.displayFont(WIDTH, HEIGHT, countFPS);
 				//man.displayScoreLives(man);
 			}
-
-			////If there is a game over
-			else
-			{
-				al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.displayScore(man));
-				//man.gameOver(WIDTH, HEIGHT, man,Score);
-			}
+			
+					else if (state == GAMEOVER)
+					{
+						al_draw_bitmap(lost, 0, 0, 0);
+						al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Final score: %i", man.displayScore(man));
+				
+					}
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -818,17 +828,12 @@ int main(void)
 	{
 		if (state == TITLE)
 		{
-
 		}
 		else if (state == PLAYING)
 		{
-
-
 		}
 		else if (state == GAMEOVER)
 		{
-
-
 		}
 
 		state = newState;
@@ -839,15 +844,14 @@ int main(void)
 		}
 		else if (state == PLAYING)
 		{
-			//Initialise again..... no ideawhy
+/*			//Initialise again..... no ideawhy
 			man.InitDave(man, Davex, Davey, Movespeed, Dbx, Dby, iDave);
 			//bull.InitBullet(bullets, num_bullets);
 			enem.InitEnemy(enemy, num_enemies, en);
-
+			*/
 		}
 		else if (state == GAMEOVER)
 		{
-
 
 		}
 
