@@ -268,7 +268,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
-	//al_play_sample(backgroundMusic, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
+al_play_sample(backgroundMusic, 0.5, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 
 
 	//////Main Game Loop
@@ -529,7 +529,7 @@ int main(void)
 					al_draw_bitmap(Trophy, txtposx - 50, HEIGHT - 42, 0);
 				}
 
-				if (Lives <= 0)
+				if (man.displayLives(man) <= 0)
 				{
 					isGameOver = true;
 					al_play_sample_instance(gameover);
@@ -553,10 +553,7 @@ int main(void)
 				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
 
 				int posx = 200;
-				if (man.displayScore(man) % 1000 == 0)
-				{
-					al_play_sample_instance(newlife);
-				}
+				
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", man.displayScore(man));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", man.displayLives(man));
@@ -703,8 +700,8 @@ int main(void)
 			////If there is a game over
 			else
 			{
-				//al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.displayScore(man));
-				man.gameOver(WIDTH, HEIGHT, man,Score);
+				al_draw_textf(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Game over. Final score: %i", man.displayScore(man));
+				//man.gameOver(WIDTH, HEIGHT, man,Score);
 			}
 
 			al_flip_display();
