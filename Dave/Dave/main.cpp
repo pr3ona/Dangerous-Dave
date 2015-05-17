@@ -661,28 +661,28 @@ int main(void)
 
 				jump = (Davey + DaveHeight / 2 >= HEIGHT - 105);
 
-				if (Davex>0 && Davex<205 && Davey<HEIGHT - 105 && Davey> HEIGHT-200)
+				if (Davex>0 && Davex<205 && Davey<HEIGHT - 115 && Davey> HEIGHT-200)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 155);
 
-				if (Davex>105 && Davex<305 && Davey<HEIGHT - 205 && Davey>330)
+				if (Davex>105 && Davex<305 && Davey<HEIGHT - 215 && Davey>330)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 305 && Davey> HEIGHT-430)
+				if (Davex>205 && Davex < 455 && Davey < HEIGHT - 315 && Davey> HEIGHT-420)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 355);
 
-				if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 200&& Davey>HEIGHT-325)
+				if (Davex > 455 && Davex< 660 && Davey < HEIGHT - 210&& Davey>HEIGHT-315)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-				if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 355 && Davey>HEIGHT-480)
+				if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 385 && Davey>HEIGHT-470)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 450);
 
-				if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 300&& Davey>HEIGHT-425)
+				if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 310&& Davey>HEIGHT-415)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 410);
 
-				if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 200 && Davey> HEIGHT - 275)
+				if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 210 && Davey> HEIGHT - 260)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-				if (Davex > 855 && Davex < 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 225)
+				if (Davex > 855 && Davex < 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 210)
 				{
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 205);
 				}
