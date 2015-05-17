@@ -91,13 +91,7 @@ void Level::displayFont(const int &WIDTH, const int &HEIGHT, int &countFPS) //Di
 	ALLEGRO_FONT *font24 = al_load_font("BAUHS93.TTF", 24, 0);
 	ALLEGRO_FONT *font18 = al_load_font("AGENCYR.TTF", 18, 0);
 
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 5, 5, 0, "Level:000000000000000000 ");	
-	/*al_draw_text(font24, al_map_rgb(0, 255, 0), 10, HEIGHT - 50, 0, "JetPack");
-	al_draw_text(font24, al_map_rgb(0, 255, 0), 810, HEIGHT - 50, 0, "Gun");
-	al_draw_text(font24, al_map_rgb(0, 255, 0), WIDTH / 2, HEIGHT - 50, ALLEGRO_ALIGN_CENTER, "!!Go Thru The Door!!");
-	al_draw_textf(font18, al_map_rgb(0, 255, 0), WIDTH, 5, ALLEGRO_ALIGN_RIGHT, "FPS: %i"); count fps needs to be added
-
-	//al_flip_display();??????????*/
+	al_draw_text(font24, al_map_rgb(0, 255, 0), 5, 5, 0, "Level:000000000000000000 ");
 }
 
 

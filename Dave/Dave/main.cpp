@@ -81,7 +81,7 @@ int main(void)
 	int Movespeed = 5; //allows us to change the players speed from this class
 	int velx = 0;
 	int vely = 0;
-	int jumpSpeed = 13;
+	int jumpSpeed = 14;
 	///////////////////
 
 	/////////STATE////////////////TITLE/////PLAYING///GAMEOVER
@@ -340,10 +340,7 @@ int main(void)
 				keys[UP] = true;
 				break;
 
-				/*case ALLEGRO_KEY_DOWN:		//not needed anymore delete if necessary...
-				keys[DOWN] = true;
-				break;*/
-
+				
 			case ALLEGRO_KEY_RIGHT:
 				keys[RIGHT] = true;
 				break;
@@ -380,9 +377,7 @@ int main(void)
 				keys[UP] = false;
 				break;
 
-				/*case ALLEGRO_KEY_DOWN:
-				keys[DOWN] = false;
-				break;*/
+			
 
 			case ALLEGRO_KEY_RIGHT:
 				velx = 0;  //Stops moving Dave right when the key is not pressed, 
@@ -430,23 +425,21 @@ int main(void)
 				jump = false;
 			}
 
-			/*if (keys[DOWN])			//Not needed anymore, delete if necessary
-			man.MoveDown(man);*/
-
+			
 			if (keys[LEFT])
 			{
 
-				//man.MoveLeft(man);
+				
 				velx = -Movespeed;
-				//al_play_sample_instance(walking);
+				
 			}
 
 			if (keys[RIGHT])
 			{
 
-				//man.MoveRight(man);
+				
 				velx = Movespeed;
-				//al_play_sample_instance(walking);
+				
 				
 			}
 			
@@ -465,7 +458,7 @@ int main(void)
 				//Collision  enemy
 				if (Davex + Dbx > xE - Ebx && Davex - Dbx < xE + Ebx && Davey + Dby > yE - Eby &&	Davey - Dby < yE + Eby)
 				{
-					//collision = true;
+					
 
 					man.DecreaseLife(man); // Lives -= 1;
 					Davex = 100;
@@ -488,7 +481,7 @@ int main(void)
 				{
 					man.increaseScore(man);
 					al_play_sample_instance(collectGem);
-					//Score+=100;
+		
 					liveGem2 = false;
 				}
 
@@ -497,7 +490,7 @@ int main(void)
 				{
 					man.increaseScore(man);
 					al_play_sample_instance(collectGem);
-					//Score+=100;
+					
 					liveGem2 = false;
 					
 				}
@@ -676,16 +669,44 @@ int main(void)
 				if (Davex > 500 && Davex< 850 && Davey < HEIGHT - 385 && Davey>HEIGHT-470)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 450);
 
-				if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 310&& Davey>HEIGHT-415)
-					jump = (Davey + DaveHeight / 2 >= HEIGHT - 410);
+				if (Davex > 900 && Davex< 1200 && Davey < HEIGHT - 310&& Davey>HEIGHT-430)
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 435);
 
-				if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 210 && Davey> HEIGHT - 260)
+				if (Davex > 700 && Davex< 855 && Davey < HEIGHT - 210 && Davey> HEIGHT - 275)
 					jump = (Davey + DaveHeight / 2 >= HEIGHT - 255);
 
-				if (Davex > 855 && Davex < 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 210)
+				if (Davex > 855 && Davex < 1200 && Davey < HEIGHT - 150 && Davey> HEIGHT - 230)
 				{
-					jump = (Davey + DaveHeight / 2 >= HEIGHT - 205);
+					jump = (Davey + DaveHeight / 2 >= HEIGHT - 225);
 				}
+
+
+				if (Davey < HEIGHT - 100  && Davey > HEIGHT - 150  && Davex < 200)
+					Davex = 200;
+
+				if (Davey < HEIGHT - 150 && Davey > HEIGHT - 200 && Davex > 850 && Davex < 1200)
+					Davex = 850;
+
+				if (Davey < HEIGHT - 200 && Davey > HEIGHT - 250 && Davex > 100 && Davex<300)
+					Davex = 100;
+				
+				if (Davey < HEIGHT - 200 && Davey > HEIGHT - 250 && Davex > 450 && Davex<550)
+					Davex = 450;
+			
+
+				if (Davey < HEIGHT - 200 && Davey > HEIGHT - 250 && Davex > 700 && Davex<850)
+					Davex = 700;
+				if (Davey < HEIGHT - 200 && Davey > HEIGHT - 250 && Davex>850&& Davex <900)
+					Davex = 900;
+
+				if (Davey < HEIGHT - 300 && Davey > HEIGHT - 350 && Davex > 200 && Davex<300)
+					Davex = 200;
+
+				if (Davey < HEIGHT - 350 && Davey > HEIGHT - 400 && Davex > 950 && Davex<1200)
+					Davex = 950;
+
+				if (Davey < HEIGHT - 400 && Davey > HEIGHT - 450 && Davex > 500 && Davex<850)
+					Davex = 450;
 
 
 
