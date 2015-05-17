@@ -770,7 +770,7 @@ int main(void)
 				al_draw_bitmap(iDave, Davex, Davey - DaveHeight / 2, 0);
 
 				//////enemy one level 1
-				if (xE >= 900 && a > 0)
+				if (xE >= 875 && a > 0)
 				{
 					a *= -1;
 					flipenemy = false;
@@ -797,12 +797,12 @@ int main(void)
 					
 					if (flipenemy)
 					{
-						al_draw_bitmap(enf[curFrame], xE, 350, 0);
+						al_draw_bitmap(enf[curFrame], xE += a * 3, 350, 0);
 					}
 			
 					if (!flipenemy)
 					{
-						al_draw_bitmap(en[curFrame], xE, 350, 0);		//draw enemy to map
+						al_draw_bitmap(en[curFrame], xE += a * 3, 350, 0);		//draw enemy to map
 					}
 
 				bull.DrawBullet(bullets, num_bullets);
