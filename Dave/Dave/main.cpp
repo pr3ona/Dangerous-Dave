@@ -91,7 +91,15 @@ int main(void)
 	ALLEGRO_BITMAP *en = NULL;
 
 	ALLEGRO_SAMPLE *backgroundMusic = NULL;
-
+	ALLEGRO_SAMPLE_INSTANCE *walking = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *shooting = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *collectGem = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *jumptime = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *gothruthedoor = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *exitdoor = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *newlife = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *gameover = NULL;
+	ALLEGRO_SAMPLE_INSTANCE *death = NULL;
 
 	//Initialization Functions
 	if (!al_init())										//initialize Allegro
@@ -114,6 +122,33 @@ int main(void)
 								//converts many sounds being played simultaneously 
 								//together, to output to a signle channel since speakers are only single channel
 	backgroundMusic = al_load_sample("AnimalsRemix.ogg"); //allegro can't play mp3s
+	walking = al_create_sample_instance(al_load_sample("Walking.wav"));
+	shooting = al_create_sample_instance(al_load_sample("Shooting.wav"));
+	collectGem = al_create_sample_instance(al_load_sample("Gem.wav"));
+	jumptime = al_create_sample_instance(al_load_sample("Jump.wav"));
+	gothruthedoor = al_create_sample_instance(al_load_sample("Gothruthedoor.wav"));
+	exitdoor = al_create_sample_instance(al_load_sample("Exitdoor.wav"));
+	newlife = al_create_sample_instance(al_load_sample("Newlife.wav"));
+	gameover = al_create_sample_instance(al_load_sample("Gameover.wav"));
+	death = al_create_sample_instance(al_load_sample("Death.wav"));
+
+	/*To hear each sound effect individually we use the sample instance to mixer method,
+	recall that each sound effect = 1 channel, therefore, we have 10 channels in our game,
+	but our speaker is only a 1 channel*/
+
+	al_attach_sample_instance_to_mixer(walking, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(shooting, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(collectGem, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(jumptime, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(gothruthedoor, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(exitdoor, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(newlife, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(gameover, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(death, al_get_default_mixer());
+
+
+	
+	
 	///////////////
 
 	//mappy
@@ -233,7 +268,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
-	al_play_sample(backgroundMusic, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
+	//al_play_sample(backgroundMusic, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 
 
 	//////Main Game Loop
@@ -341,6 +376,7 @@ int main(void)
 
 				//man.MoveUp(man, jump, gravity, HEIGHT);
 				vely = -jumpSpeed;
+				al_play_sample_instance(jumptime);
 				jump = false;
 			}
 
@@ -352,6 +388,7 @@ int main(void)
 
 				//man.MoveLeft(man);
 				velx = -Movespeed;
+				//al_play_sample_instance(walking);
 			}
 
 			if (keys[RIGHT])
@@ -359,6 +396,8 @@ int main(void)
 
 				//man.MoveRight(man);
 				velx = Movespeed;
+				//al_play_sample_instance(walking);
+				
 			}
 
 			if (!isGameOver)
@@ -377,13 +416,14 @@ int main(void)
 					Davex = 100;
 					Davey = 150;
 					al_draw_bitmap(Dave, Davex, Davey - DaveHeight / 2, 0);
-
+					al_play_sample_instance(death);
 				}
 
 				//collision detection gem
 				if (liveGem1 && Davex + Dbx > RGx - RGBx && Davex - Dbx < RGx + RGBx && Davey + Dby > RGy - RGBy &&	Davey - Dby < RGy + RGBy)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score += 100;
 					liveGem1 = false;
 				}
@@ -394,6 +434,7 @@ int main(void)
 				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score+=100;
 					liveGem2 = false;
 				}
@@ -402,6 +443,7 @@ int main(void)
 				if (liveGem2 && Davex + Dbx > RG2x - redGem2Width / 2 && Davex - Dbx < RG2x + redGem2Width / 2 && Davey + Dby > RG2y - redGem2Height / 2 && Davey - Dby < RG2y + redGem2Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score+=100;
 					liveGem2 = false;
 					
@@ -412,6 +454,7 @@ int main(void)
 				if (liveGem3&&Davex + Dbx > RG3x - redGem3Width / 2 && Davex - Dbx < RG3x + redGem3Width / 2 && Davey + Dby > RG3y - redGem3Height / 2 && Davey - Dby < RG3y + redGem3Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score += 100;
 					liveGem3 = false;
 				}
@@ -421,6 +464,7 @@ int main(void)
 				if (liveGem4&&Davex + Dbx > RG4x - redGem4Width / 2 && Davex - Dbx < RG4x + redGem4Width / 2 && Davey + Dby > RG4y - redGem4Height / 2 && Davey - Dby < RG4y + redGem4Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score += 100;
 					liveGem4 = false;
 				}
@@ -430,6 +474,7 @@ int main(void)
 				if (liveGem5&&Davex + Dbx > BG1x - blueGem1Width / 2 && Davex - Dbx < BG1x + blueGem1Width / 2 && Davey + Dby > BG1y - blueGem1Height / 2 && Davey - Dby < BG1y + blueGem1Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score += 100;
 					liveGem5 = false;
 				}
@@ -437,6 +482,7 @@ int main(void)
 				if (liveGem6&&Davex + Dbx > BG2x - blueGem2Width / 2 && Davex - Dbx < BG2x + blueGem1Width / 2 && Davey + Dby > BG2y - blueGem2Height / 2 && Davey - Dby < BG2y + blueGem2Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score += 100;
 					liveGem6 = false;
 				}
@@ -445,6 +491,7 @@ int main(void)
 				if (liveGem7&&Davex + Dbx > BG3x - blueGem3Width / 2 && Davex - Dbx < BG3x + blueGem3Width / 2 && Davey + Dby > BG3y - blueGem3Height / 2 && Davey - Dby < BG3y + blueGem3Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score += 100;
 					liveGem7 = false;
 				}
@@ -452,6 +499,7 @@ int main(void)
 				if (liveGem8&&Davex + Dbx > BG4x - blueGem4Width / 2 && Davex - Dbx < BG4x + blueGem4Width / 2 && Davey + Dby > BG4y - blueGem4Height / 2 && Davey - Dby < BG4y + blueGem4Height / 2)
 				{
 					man.increaseScore(man);
+					al_play_sample_instance(collectGem);
 					//Score += 100;
 					liveGem8 = false;
 				}
@@ -464,6 +512,7 @@ int main(void)
 				if (liveTrophy&&Davex + Dbx > Tx - TBx && Davex - Dbx < Tx + TBx && Davey + Dby > Ty - TBy &&	Davey - Dby < Ty + TBy)
 				{ 
 					man.increaseScore(man);
+					al_play_sample_instance(gothruthedoor);
 					//Score += 1000;
 					liveTrophy = false;	
 				}
@@ -480,7 +529,11 @@ int main(void)
 				}
 
 				if (Lives <= 0)
+				{
 					isGameOver = true;
+					al_play_sample_instance(gameover);
+				}
+					
 					
 					
 					//man.gameOver(man, isGameOver); //checks if man.lives < = 0, if it is then >> isGameOver = true;
@@ -612,6 +665,7 @@ int main(void)
 				{
 					//al_play_sample(win, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 					al_draw_text(font24, al_map_rgb(255, 168, 255), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Congratulations you passed Level 1");
+					al_play_sample_instance(exitdoor);
 					al_flip_display();
 					al_rest(3);
 					done = true;
@@ -658,6 +712,15 @@ int main(void)
 
 	////Destroy objects from memory
 	al_destroy_sample(backgroundMusic);
+	al_destroy_sample_instance(walking);
+	al_destroy_sample_instance(shooting);
+	al_destroy_sample_instance(collectGem);
+	al_destroy_sample_instance(jumptime);
+	al_destroy_sample_instance(gothruthedoor);
+	al_destroy_sample_instance(exitdoor);
+	al_destroy_sample_instance(newlife);
+	al_destroy_sample_instance(gameover);
+	al_destroy_sample_instance(death);
 	al_destroy_bitmap(Dave);
 	al_destroy_bitmap(en);
 	al_destroy_bitmap(blueGem1);
