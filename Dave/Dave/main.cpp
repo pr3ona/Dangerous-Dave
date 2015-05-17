@@ -319,6 +319,7 @@ int main(void)
 			case ALLEGRO_KEY_LCTRL:
 				keys[LCTRL] = true;
 				bull.FireBullet(bullets, num_bullets, Davex, Davey);
+				al_play_sample_instance(shooting);
 				break;
 			}
 		}
@@ -552,7 +553,10 @@ int main(void)
 				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT); //mappy
 
 				int posx = 200;
-
+				if (man.displayScore(man) % 1000 == 0)
+				{
+					al_play_sample_instance(newlife);
+				}
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx, 60, 0, "Score: %i", man.displayScore(man));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 300, 60, 0, "Level:%i", lvl.displayLevel(lvl));
 				al_draw_textf(font24, al_map_rgb(0, 255, 0), posx + 600, 60, 0, "Daves:%i", man.displayLives(man));
@@ -667,7 +671,7 @@ int main(void)
 					al_draw_text(font24, al_map_rgb(255, 168, 255), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTRE, "Congratulations you passed Level 1");
 					al_play_sample_instance(exitdoor);
 					al_flip_display();
-					al_rest(3);
+					al_rest(8);
 					done = true;
 					//goto END;
 				}

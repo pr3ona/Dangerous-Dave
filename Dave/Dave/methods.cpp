@@ -6,8 +6,6 @@
 #include <allegro5\allegro_audio.h>
 #include <allegro5\allegro_acodec.h>
 
-
-
 void Dave::InitDave(Dave &man, int x, int y, int Movespeed, int bx, int by)
 {
 	man.x = x;
@@ -74,8 +72,9 @@ int Dave::increaseScore(Dave &man)
 {
 	man.score += 200;
 	if (man.score % 1000 == 0)
+	{
 		man.lives++;
-		
+	}	
 		return man.score;
 }
 
